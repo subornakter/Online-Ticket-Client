@@ -19,6 +19,10 @@ import AddTicketForm from '../pages/AddTicketForm'
 import AllTickets from '../pages/AllTickets'
 import TicketDetails from '../pages/TicketDetails'
 import PrivateRoute from './PrivateRoute'
+import DashboardLayout from '../layouts/DashboardLayout'
+import MyBooking from '../pages/DashBoard/User/MyBooking'
+import UserProfile from '../pages/DashBoard/User/userProfile'
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -44,66 +48,66 @@ export const router = createBrowserRouter([
     ],
   },
 
-//   {
-//     path: '/dashboard',
-//     element: (
-//       <PrivateRoute>
-//         <DashboardLayout />
-//       </PrivateRoute>
-//     ),
-//     children: [
-//       {
-//         index: true,
-//         element: (
-//           <PrivateRoute>
-//             <Statistics />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'add-plant',
-//         element: (
-//           <PrivateRoute>
-//             <AddPlant />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'my-inventory',
-//         element: (
-//           <PrivateRoute>
-//             <MyInventory />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'manage-users',
-//         element: (
-//           <PrivateRoute>
-//             <ManageUsers />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'profile',
-//         element: (
-//           <PrivateRoute>
-//             <Profile />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'my-orders',
-//         element: (
-//           <PrivateRoute>
-//             <MyOrders />
-//           </PrivateRoute>
-//         ),
-//       },
-//       {
-//         path: 'manage-orders',
-//         element: <ManageOrders />,
-//       },
-//     ],
-//   },
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRoute>
+        <DashboardLayout/>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+           <UserProfile/>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'bookings',
+        element: (
+          <PrivateRoute>
+            <MyBooking/>
+          </PrivateRoute>
+        ),
+      },
+      // {
+      //   path: 'my-inventory',
+      //   element: (
+      //     <PrivateRoute>
+      //       <MyInventory />
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: 'manage-users',
+      //   element: (
+      //     <PrivateRoute>
+      //       <ManageUsers />
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: 'profile',
+      //   element: (
+      //     <PrivateRoute>
+      //       <Profile />
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: 'my-orders',
+      //   element: (
+      //     <PrivateRoute>
+      //       <MyOrders />
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: 'manage-orders',
+      //   element: <ManageOrders />,
+      // },
+    ],
+  },
 ])

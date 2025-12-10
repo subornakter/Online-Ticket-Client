@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import { motion } from "framer-motion";
 import moment from "moment";
 import BookingModal from "../components/Modal/BookingModal";
-
+import LoadingSpinner from "../components/LoadingSpinner";
 const TicketDetails = () => {
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
@@ -47,7 +47,7 @@ const TicketDetails = () => {
     return () => clearInterval(interval);
   }, [ticket]);
 
-  if (!ticket) return <p className="text-center p-10">Loading...</p>;
+  if (!ticket) return <LoadingSpinner />
 
   const isDeparturePassed = moment(ticket.departure_date_time).isBefore(moment());
   const isZeroQuantity = ticket.ticket_quantity === 0;
