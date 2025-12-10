@@ -9,6 +9,42 @@ const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
   const { user } = useAuth();
 
+
+const handlePayment = async (booking) => {
+  try {
+    const token = await user.getIdToken();
+
+    const paymentInfo = {
+      _id: booking._id,
+      ticketId: booking.ticketId,
+      title: booking.title,
+      image: booking.image,
+      price: booking.price,
+      quantity: booking.quantity,
+      userEmail: user.email,  // Add this!
+      from: booking.from,
+      to: booking.to,
+      departureTime: booking.departureTime,
+    };
+
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+      paymentInfo,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    // Redirect to Stripe Checkout
+    window.location.href = data.url;
+  } catch (err) {
+    console.log(err);
+    toast.error("Payment failed!");
+  }
+};
+
+
+
   useEffect(() => {
     if (!user?.email) return;
 
@@ -116,7 +152,7 @@ const MyBooking = () => {
                     {booking.status.toUpperCase()}
                   </td>
 
-                  <td>
+                  {/* <td>
                     {booking.status === "accepted" && !isExpired ? (
                       <Link to={`/payment/${booking._id}`}>
                         <button className="btn btn-sm btn-primary">
@@ -130,6 +166,15 @@ const MyBooking = () => {
                     ) : (
                       <span className="text-gray-400 text-sm">N/A</span>
                     )}
+                  </td> */}
+                  <td>
+                      <button
+                   onClick={() => handlePayment(booking)}
+                type='button'
+                className='cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
+              >
+                Pay
+              </button>
                   </td>
                 </tr>
               );

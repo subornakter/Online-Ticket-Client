@@ -22,7 +22,8 @@ import PrivateRoute from './PrivateRoute'
 import DashboardLayout from '../layouts/DashboardLayout'
 import MyBooking from '../pages/DashBoard/User/MyBooking'
 import UserProfile from '../pages/DashBoard/User/userProfile'
-
+import PaymentSuccess from '../pages/PaymentSuccess'
+import TransactionHistory from '../pages/DashBoard/User/TransactionHistory'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
     </PrivateRoute>
   ),
 },
+{
+        path: '/payment-success',
+        element: <PaymentSuccess/>,
+      },
      { path: '/all-tickets', element: <AllTickets/> },
           { path: '/add-ticket', element: <AddTicketForm/> },
       { path: '/login', element: <Login /> },
@@ -69,6 +74,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyBooking/>
+          </PrivateRoute>
+        ),
+      },
+       {
+        path: 'transactions',
+        element: (
+          <PrivateRoute>
+            <TransactionHistory></TransactionHistory>
           </PrivateRoute>
         ),
       },
