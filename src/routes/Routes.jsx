@@ -27,6 +27,9 @@ import TransactionHistory from '../pages/DashBoard/User/TransactionHistory'
 import MyAddedTickets from '../pages/DashBoard/Vendor/MyAddedTickets'
 import VendorBookings from '../pages/DashBoard/Vendor/VendorBookings'
 import Profile from '../pages/DashBoard/Common/Profile'
+import ManageUsers from '../pages/DashBoard/Admin/ManageUsers'
+import ManageTickets from '../pages/DashBoard/Admin/ManageTickets'
+import RevenueOverview from '../pages/DashBoard/Vendor/RevenueOverview'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -107,6 +110,13 @@ export const router = createBrowserRouter([
     </PrivateRoute>
   ),
 },
+{ path: "vendor-revenue",
+  element: (
+    <PrivateRoute>
+      <RevenueOverview></RevenueOverview>
+    </PrivateRoute>
+  ),
+},
       {
         path: 'profile',
         element: (
@@ -115,6 +125,31 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+        // ADMIN ROUTES (Add these)
+  {
+    path: "manage-users",
+    element: (
+      <PrivateRoute>
+        <ManageUsers/>
+      </PrivateRoute>
+    ),
+  },
+  // {
+  //   path: "admin-stats",
+  //   element: (
+  //     <PrivateRoute>
+  //       <Statistics />
+  //     </PrivateRoute>
+  //   ),
+  // },
+  {
+    path: "manage-tickets",
+    element: (
+      <PrivateRoute>
+        <ManageTickets/>
+      </PrivateRoute>
+    ),
+  }
       // {
       //   path: 'my-inventory',
       //   element: (

@@ -24,7 +24,7 @@ const handlePayment = async (booking) => {
       userEmail: user.email,  // Add this!
       from: booking.from,
       to: booking.to,
-      departureTime: booking.departureTime,
+         departureTime: new Date(booking.departureTime).toISOString(),
     };
 
     const { data } = await axios.post(
@@ -52,7 +52,7 @@ const handlePayment = async (booking) => {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/bookings?email=${user.email}`,
+          `${import.meta.env.VITE_API_URL}/my-bookings?email=${user.email}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -168,14 +168,21 @@ const handlePayment = async (booking) => {
                     )}
                   </td> */}
                   <td>
-                      <button
-                   onClick={() => handlePayment(booking)}
-                type='button'
-                className='cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2'
-              >
-                Pay
-              </button>
-                  </td>
+  {booking.status === "accepted" && !isExpired ? (
+    <button
+      onClick={() => handlePayment(booking)}
+      type="button"
+      className="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+    >
+      Pay Now
+    </button>
+  ) : isExpired && booking.status === "accepted" ? (
+    <span className="text-gray-400 text-sm">Time passed</span>
+  ) : (
+    <span className="text-gray-400 text-sm">N/A</span>
+  )}
+</td>
+
                 </tr>
               );
             })}

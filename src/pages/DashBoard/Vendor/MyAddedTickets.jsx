@@ -10,6 +10,7 @@ const MyAddedTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
 
+  // LOAD USER TICKETS
   useEffect(() => {
     const loadTickets = async () => {
       const token = await user.getIdToken();
@@ -17,9 +18,7 @@ const MyAddedTickets = () => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/my-tickets?email=${user.email}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setTickets(res.data);
       } catch (error) {
@@ -30,7 +29,9 @@ const MyAddedTickets = () => {
     loadTickets();
   }, [user]);
 
-  // DELETE TICKET
+  /* --------------------------
+        DELETE TICKET
+  --------------------------- */
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -45,11 +46,14 @@ const MyAddedTickets = () => {
         try {
           const token = await user.getIdToken();
 
-          await axios.delete(`${import.meta.env.VITE_API_URL}/ticket/${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          await axios.delete(
+            `${import.meta.env.VITE_API_URL}/ticket/${id}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
 
-          setTickets(tickets.filter((t) => t._id !== id));
+          setTickets((prev) => prev.filter((t) => t._id !== id));
 
           Swal.fire("Deleted!", "Ticket has been deleted.", "success");
         } catch (error) {
@@ -60,7 +64,9 @@ const MyAddedTickets = () => {
     });
   };
 
-  // UPDATE FORM SUBMIT
+  /* --------------------------
+        UPDATE TICKET
+  --------------------------- */
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -75,16 +81,18 @@ const MyAddedTickets = () => {
       ticket_quantity: Number(form.ticket_quantity.value),
       perks: form.perks.value.split(",").map((p) => p.trim()),
       description: form.description.value,
-      departure_date_time: form.departure_date_time.value,
+      departure_date_time: new Date(form.departure_date_time.value).toISOString(),
     };
 
     try {
       const token = await user.getIdToken();
 
-      await axios.put(
+      await axios.patch(
         `${import.meta.env.VITE_API_URL}/ticket/${selectedTicket._id}`,
         updatedData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       Swal.fire("Updated!", "Ticket updated successfully", "success");
@@ -125,9 +133,7 @@ const MyAddedTickets = () => {
               {ticket.from} → {ticket.to}
             </p>
 
-            <p className="text-gray-800 font-semibold mt-1">
-              ${ticket.price}
-            </p>
+            <p className="text-gray-800 font-semibold mt-1">${ticket.price}</p>
 
             <p className="text-sm text-gray-500">
               Quantity: {ticket.ticket_quantity}
@@ -145,7 +151,7 @@ const MyAddedTickets = () => {
               Date: {ticket.departure_date_time?.slice(0, 16)}
             </p>
 
-            {/* TICKET STATUS */}
+            {/* STATUS */}
             <span
               className={`inline-block px-3 py-1 text-sm rounded-full mt-2 
                 ${
@@ -165,7 +171,7 @@ const MyAddedTickets = () => {
                 disabled={ticket.status === "rejected"}
                 onClick={() => setSelectedTicket(ticket)}
                 className="flex items-center gap-2 px-3 py-1 rounded bg-blue-500 text-white 
-           disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 <FaEdit /> Update
               </button>
@@ -174,7 +180,7 @@ const MyAddedTickets = () => {
                 disabled={ticket.status === "rejected"}
                 onClick={() => handleDelete(ticket._id)}
                 className="flex items-center gap-2 px-3 py-1 rounded bg-red-500 text-white
-           disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 <FaTrash /> Delete
               </button>
@@ -185,12 +191,11 @@ const MyAddedTickets = () => {
 
       {/* UPDATE MODAL */}
       {selectedTicket && (
-        <div className="fixed inset-0  bg-opacity-40 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
           <div className="bg-white w-[450px] rounded-lg p-5 shadow-xl max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-3">Update Ticket</h2>
 
             <form onSubmit={handleUpdateSubmit} className="space-y-3">
-
               <label className="font-semibold">Title</label>
               <input
                 type="text"
@@ -247,12 +252,11 @@ const MyAddedTickets = () => {
                 className="w-full border p-2 rounded"
               />
 
-              <label className="font-semibold">Perks (comma separated)</label>
+              <label className="font-semibold">Perks</label>
               <textarea
                 name="perks"
                 defaultValue={selectedTicket.perks?.join(", ")}
                 className="w-full border p-2 rounded"
-                placeholder="WiFi, AC, Charging..."
               ></textarea>
 
               <label className="font-semibold">Description</label>
@@ -286,7 +290,6 @@ const MyAddedTickets = () => {
                   Save
                 </button>
               </div>
-
             </form>
           </div>
         </div>

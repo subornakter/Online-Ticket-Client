@@ -14,18 +14,30 @@ const AddTicketForm = () => {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
-  const { isPending, isError, mutateAsync, reset: mutationReset } = useMutation({
-    mutationFn: async payload =>
-      await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, payload),
+ const { isPending, isError, mutateAsync, reset: mutationReset } = useMutation({
+  mutationFn: async payload => {
+    const token = await user.getIdToken();   // <-- added
 
-    onSuccess: () => {
-      toast.success('Ticket added successfully')
-      mutationReset()
-      reset()
-    },
+    return await axios.post(
+      `${import.meta.env.VITE_API_URL}/tickets`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,   // <-- added
+        }
+      }
+    );
+  },
 
-    onError: error => console.log(error),
-  })
+  onSuccess: () => {
+    toast.success('Ticket added successfully');
+    mutationReset();
+    reset();
+  },
+
+  onError: error => console.log(error),
+});
+
 
   const onSubmit = async data => {
     const imageFile = data.image[0]
@@ -41,7 +53,7 @@ const AddTicketForm = () => {
       ticket_quantity: Number(data.ticket_quantity),
       perks: data.perks.split(',').map(p => p.trim()),
       description: data.description,
-      departure_date_time: data.departure_date_time,
+      departure_date_time: new Date(data.departure_date_time).toISOString(),
 
       seller: {
         name: user?.displayName,
