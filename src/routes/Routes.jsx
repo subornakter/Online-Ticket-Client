@@ -24,6 +24,7 @@ import MyBooking from '../pages/DashBoard/User/MyBooking'
 import UserProfile from '../pages/DashBoard/User/userProfile'
 import PaymentSuccess from '../pages/PaymentSuccess'
 import TransactionHistory from '../pages/DashBoard/User/TransactionHistory'
+import MyAddedTickets from '../pages/DashBoard/Vendor/MyAddedTickets'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -85,6 +86,16 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
+      {
+  path: "my-tickets",
+  element: (
+    <PrivateRoute>
+      <MyAddedTickets/>
+    </PrivateRoute>
+  ),
+}
+
       // {
       //   path: 'my-inventory',
       //   element: (
