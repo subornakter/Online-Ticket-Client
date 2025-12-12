@@ -31,6 +31,8 @@ import ManageUsers from '../pages/DashBoard/Admin/ManageUsers'
 import ManageTickets from '../pages/DashBoard/Admin/ManageTickets'
 import RevenueOverview from '../pages/DashBoard/Vendor/RevenueOverview'
 import AdvertiseTickets from '../pages/DashBoard/Admin/AdvertiseTickets'
+import Contact from '../pages/Contact'
+import AboutUs from '../pages/AboutUs'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -54,6 +56,9 @@ export const router = createBrowserRouter([
         element: <PaymentSuccess/>,
       },
      { path: '/all-tickets', element: <AllTickets/> },
+         
+      { path: '/contact', element: <Contact/> },
+          { path: '/about', element: <AboutUs/> },
         
       { path: '/login', element: <Login /> },
   { path: '/signup', element: <SignUp /> },

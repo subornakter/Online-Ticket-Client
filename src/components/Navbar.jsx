@@ -8,7 +8,7 @@ const Navbar = () => {
   const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
 
-  const activeClass = "px-4 py-3 font-semibold border border-blue-500 text-blue-500 rounded transition";
+  const activeClass = "px-4 py-3 font-semibold border border-green-600 text-green-600 rounded transition";
   const normalClass = "px-4 py-3 font-semibold hover:bg-neutral-100 transition rounded";
 
   return (
@@ -39,7 +39,7 @@ const Navbar = () => {
         </div>
         <div className='flex justify-center items-center '>
           <img className='w-15 h-15' src="https://i.ibb.co.com/fdP2R8HF/logo4.jpg" alt="" />
-          <a className="font-bold text-2xl">TicketBari</a>
+          <a className="font-bold text-2xl"><span className='text-green-600'>Ticket</span>Bari</a>
         </div>
       </div>
 
@@ -47,7 +47,8 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           <NavLink to="/" className={({ isActive }) => isActive ? activeClass : normalClass}>Home</NavLink>
           <NavLink to="/all-tickets" className={({ isActive }) => isActive ? activeClass : normalClass}>All Tickets</NavLink>
-          <NavLink to="/add-ticket" className={({ isActive }) => isActive ? activeClass : normalClass}>Add Ticket</NavLink>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? activeClass : normalClass}>ContactUs</NavLink>
+          <NavLink to="/about" className={({ isActive }) => isActive ? activeClass : normalClass}>AboutUs</NavLink>
           <NavLink to="/dashboard" className={({ isActive }) => isActive ? activeClass : normalClass}>Dashboard</NavLink>
         </ul>
       </div>

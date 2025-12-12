@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Navbar from "../components/Navbar";
 
 export default function DashboardLayout() {
   const [role, isLoading] = useRole();
@@ -14,7 +15,7 @@ export default function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen">
-      
+     
       {/* Sidebar */}
       <aside className="w-64 bg-gray-100 shadow-lg p-5">
        <div className="flex  items-center">
@@ -80,11 +81,12 @@ export default function DashboardLayout() {
 
         </nav>
       </aside>
-
+     
       {/* Main content */}
       <main className="flex-1 p-6 bg-white">
         <Outlet />
       </main>
+     
     </div>
   );
 }

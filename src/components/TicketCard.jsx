@@ -45,7 +45,7 @@ const TicketCard = ({ ticket }) => {
           See Details
         </button> */}
           <Link to={`/ticket/${ticket._id}`}>
-        <button className="w-full py-2 mt-2 bg-lime-500 text-white rounded-md hover:bg-lime-600 transition">
+        <button className="w-full py-2 mt-2 bg-green-600 text-white rounded-md hover:bg-lime-600 transition">
           See Details
         </button>
       </Link>
