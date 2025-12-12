@@ -69,7 +69,7 @@ export default function DashboardLayout() {
               <NavLink to="/dashboard/manage-users" className={menuClass}>
                 Manage Users
               </NavLink>
-              <NavLink to="/dashboard/advertise" className={menuClass}>
+              <NavLink to="/dashboard/advertise-tickets" className={menuClass}>
                 Advertise Tickets
               </NavLink>
             </>

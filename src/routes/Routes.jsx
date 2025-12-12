@@ -30,6 +30,7 @@ import Profile from '../pages/DashBoard/Common/Profile'
 import ManageUsers from '../pages/DashBoard/Admin/ManageUsers'
 import ManageTickets from '../pages/DashBoard/Admin/ManageTickets'
 import RevenueOverview from '../pages/DashBoard/Vendor/RevenueOverview'
+import AdvertiseTickets from '../pages/DashBoard/Admin/AdvertiseTickets'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -147,6 +148,14 @@ export const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <ManageTickets/>
+      </PrivateRoute>
+    ),
+  },
+   {
+    path: "advertise-tickets",
+    element: (
+      <PrivateRoute>
+        <AdvertiseTickets/>
       </PrivateRoute>
     ),
   }
