@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-
 export default function ManageUsers() {
   const axiosSecure = useAxiosSecure();
 
@@ -20,6 +19,11 @@ export default function ManageUsers() {
 
   const makeVendor = async (email) => {
     await axiosSecure.patch(`/admin/make-vendor/${email}`);
+    refetch();
+  };
+
+  const markFraud = async (email) => {
+    await axiosSecure.patch(`/admin/mark-fraud/${email}`);
     refetch();
   };
 
@@ -45,20 +49,38 @@ export default function ManageUsers() {
               <td className="p-2">{u.name}</td>
               <td className="p-2">{u.email}</td>
               <td className="p-2 font-semibold">{u.role}</td>
-              <td className="p-2 space-x-2">
-                <button
-                  onClick={() => makeAdmin(u.email)}
-                  className="px-2 py-1 bg-blue-500 text-white rounded"
-                >
-                  Make Admin
-                </button>
 
-                <button
-                  onClick={() => makeVendor(u.email)}
-                  className="px-2 py-1 bg-green-500 text-white rounded"
-                >
-                  Make Vendor
-                </button>
+              <td className="p-2 space-x-2">
+
+                {/* Hide buttons for the logged-in admin */}
+                {!u.isCurrentUser && (
+                  <>
+                    <button
+                      onClick={() => makeAdmin(u.email)}
+                      className="px-2 py-1 bg-blue-500 text-white rounded"
+                    >
+                      Make Admin
+                    </button>
+
+                    <button
+                      onClick={() => makeVendor(u.email)}
+                      className="px-2 py-1 bg-green-500 text-white rounded"
+                    >
+                      Make Vendor
+                    </button>
+
+                    {/* Show FRAUD button ONLY if vendor */}
+                    {u.role === "vendor" && (
+                      <button
+                        onClick={() => markFraud(u.email)}
+                        className="px-2 py-1 bg-red-500 text-white rounded"
+                      >
+                        Mark as Fraud
+                      </button>
+                    )}
+                  </>
+                )}
+
               </td>
             </tr>
           ))}
