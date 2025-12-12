@@ -1,10 +1,11 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import AdvertisementSection from '../components/AdvertiseMentSection';
 const Home = () => {
     return (
         <div>
           
-            this is home page
+          <AdvertisementSection/>
 
         </div>
     );

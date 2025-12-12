@@ -17,7 +17,10 @@ export default function DashboardLayout() {
       
       {/* Sidebar */}
       <aside className="w-64 bg-gray-100 shadow-lg p-5">
-        <h2 className="text-xl font-bold mb-6">Dashboard</h2>
+       <div className="flex  items-center">
+        <NavLink to='/'> <img className='w-15 h-15' src="https://i.ibb.co.com/bR2Kqky6/logo4-removebg-preview.png" alt="" /></NavLink>
+        <h2 className="text-2xl font-bold mt-5 mb-6">Dashboard</h2>
+       </div>
 
         <nav className="flex flex-col gap-3">
 
