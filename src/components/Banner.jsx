@@ -1,12 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
 
 export default function Banner() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16 rounded-xl shadow-lg ">
+    <section className="max-w-7xl mx-auto px-6 py-16 rounded-xl shadow-lg">
       <div className="flex flex-col md:flex-row items-center gap-10">
         
-        {/* Left Text with motion */}
+        {/* Left Text */}
         <motion.div
           className="md:w-1/2 space-y-6"
           initial={{ opacity: 0, x: -50 }}
@@ -14,11 +15,26 @@ export default function Banner() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold text-green-600">
-            Book Your Tickets Easily
+            <Typewriter
+              words={[
+                "Book Your Tickets Easily",
+                "Bus, Train, Launch & Launch",
+                "Fast & Secure Booking",
+              ]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
           </h1>
+
           <p className="text-gray-700 text-lg">
-            Experience hassle-free booking for buses, trains, launches, and flights across Bangladesh. Fast confirmation, secure payments, and all-in-one ticketing platform.
+            Experience hassle-free booking for buses, trains, launches, and flights across Bangladesh.
+            Fast confirmation, secure payments, and all-in-one ticketing platform.
           </p>
+
           <div className="flex gap-4 mt-4">
             <a
               href="/tickets"
@@ -35,11 +51,11 @@ export default function Banner() {
           </div>
         </motion.div>
 
-        {/* Right GIF without motion */}
+        {/* Right GIF */}
         <img
           src="https://i.ibb.co/FqnbFJVq/b12.gif"
           alt="Travel Animation"
-          className="md:w-1.5/2 max-w-md "
+          className="md:w-1/2 max-w-md"
         />
       </div>
     </section>
