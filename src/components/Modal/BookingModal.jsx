@@ -52,7 +52,7 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+      <div className="bg-base-100 p-6 rounded-lg w-96 shadow-lg">
         <h2 className="font-bold text-xl mb-4">Book Ticket</h2>
 
         <label className="font-semibold">Quantity:</label>
@@ -63,7 +63,9 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
           max={ticket.ticket_quantity}
           value={quantity}
           onChange={(e) =>
-            setQuantity(Math.min(Number(e.target.value), ticket.ticket_quantity))
+            setQuantity(
+              Math.min(Number(e.target.value), ticket.ticket_quantity)
+            )
           }
         />
 
@@ -75,10 +77,7 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
           Confirm Booking
         </button>
 
-        <button
-          onClick={closeModal}
-          className="btn btn-outline w-full mt-2"
-        >
+        <button onClick={closeModal} className="btn btn-outline w-full mt-2">
           Cancel
         </button>
       </div>
@@ -87,5 +86,3 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
 };
 
 export default BookingModal;
-
-

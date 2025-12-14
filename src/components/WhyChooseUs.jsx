@@ -1,5 +1,10 @@
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaThumbsUp, FaClock, FaMoneyBillWave } from "react-icons/fa";
+import {
+  FaShieldAlt,
+  FaThumbsUp,
+  FaClock,
+  FaMoneyBillWave,
+} from "react-icons/fa";
 
 export default function WhyChooseUs() {
   const features = [
@@ -45,7 +50,8 @@ export default function WhyChooseUs() {
           viewport={{ once: true }}
           className="text-gray-600 max-w-2xl mx-auto mb-16"
         >
-          We provide a seamless, safe and fast booking experience to make your journey stress-free.
+          We provide a seamless, safe and fast booking experience to make your
+          journey stress-free.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -57,7 +63,7 @@ export default function WhyChooseUs() {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05 }}
-              className="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition cursor-pointer"
+              className="bg-base-100 shadow-lg rounded-2xl p-6 hover:shadow-2xl transition cursor-pointer"
             >
               <div className="flex justify-center mb-4">{item.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{item.title}</h3>

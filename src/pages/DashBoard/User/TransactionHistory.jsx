@@ -61,9 +61,7 @@ const TransactionHistory = () => {
                 <tr
                   key={t.transactionId}
                   className={`transition duration-200 ${
-                    index % 2 === 0
-                      ? "bg-white"
-                      : "bg-gray-50"
+                    index % 2 === 0 ? "bg-base-100" : "bg-gray-50"
                   } hover:bg-blue-50`}
                 >
                   <td className="p-4 border-b text-sm font-mono">
@@ -87,5 +85,3 @@ const TransactionHistory = () => {
 };
 
 export default TransactionHistory;
-
-

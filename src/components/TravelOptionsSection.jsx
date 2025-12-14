@@ -3,7 +3,7 @@ import { FaTicketAlt, FaRoute, FaSmileBeam } from "react-icons/fa";
 
 export default function TravelOptionsSection() {
   return (
-    <div className="max-w-7xl mx-auto py-16 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className="max-w-7xl bg-base-100 mx-auto py-16 grid grid-cols-1 md:grid-cols-2 gap-10">
       
       {/* LEFT SIDE TEXT */}
       <motion.div

@@ -47,7 +47,7 @@ const TicketCard = ({ ticket }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
+      className="bg-base-100 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
     >
       {/* Image */}
       <div className="relative">
@@ -55,7 +55,10 @@ const TicketCard = ({ ticket }) => {
 
         {/* Transport Badge */}
         <div className="absolute top-3 right-3 flex items-center gap-2 bg-orange-100 px-3 py-1 rounded-full text-sm font-medium shadow">
-         <span className="text-green-600"> {getTransportIcon(transport_type)} </span>
+          <span className="text-green-600">
+            {" "}
+            {getTransportIcon(transport_type)}{" "}
+          </span>
           <span className="capitalize">{transport_type}</span>
         </div>
       </div>
@@ -63,7 +66,7 @@ const TicketCard = ({ ticket }) => {
       {/* Content */}
       <div className="p-4 space-y-3">
         {/* Title */}
-        <h2 className="text-lg font-bold text-gray-800">{title}</h2>
+        <h2 className="text-lg font-bold text-base-content">{title}</h2>
 
         {/* Route */}
         <div className="flex items-center gap-2 text-sm text-gray-700">
@@ -79,16 +82,16 @@ const TicketCard = ({ ticket }) => {
           <p className="flex items-center gap-2">
             <FaMoneyBillWave className="text-green-600" />
             <span className="font-medium text-gray-600">Price:</span>
-            <span className="font-semibold text-green-600">
-              {price} BDT
-            </span>
+            <span className="font-semibold text-green-600">{price} BDT</span>
           </p>
 
           {/* Available Seats */}
           <p className="flex items-center gap-2">
             <FaChair className="text-indigo-600" />
             <span className="font-medium text-gray-600">Available Seats:</span>
-            <span className="font-semibold">{ticket_quantity}</span>
+            <span className="font-semibold text-yellow-500">
+              {ticket_quantity}
+            </span>
           </p>
 
           {/* Departure */}
@@ -118,7 +121,7 @@ const TicketCard = ({ ticket }) => {
 
         {/* Button */}
         <Link to={`/ticket/${_id}`}>
-          <button className="w-full mt-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
+          <button className="w-full mt-3 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
             See Details
           </button>
         </Link>

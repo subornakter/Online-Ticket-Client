@@ -16,17 +16,18 @@ import {
   FaClock,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import { FaHourglassHalf } from "react-icons/fa";
 
 const transportIcon = (type) => {
   switch (type) {
     case "bus":
       return <FaBusAlt className="text-green-600" />;
     case "train":
-      return <FaTrain className="text-red-600" />;
+      return <FaTrain className="text-green-600" />;
     case "flight":
-      return <FaPlaneDeparture className="text-blue-600" />;
+      return <FaPlaneDeparture className="text-green-600" />;
     case "launch":
-      return <FaShip className="text-cyan-600" />;
+      return <FaShip className="text-green-600" />;
     default:
       return null;
   }
@@ -44,9 +45,10 @@ const TicketDetails = () => {
     const fetchTicket = async () => {
       try {
         const token = await user?.getIdToken();
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/ticket/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/ticket/${id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         setTicket(res.data);
       } catch (err) {
         console.log(err);
@@ -58,9 +60,7 @@ const TicketDetails = () => {
   useEffect(() => {
     if (!ticket) return;
     const interval = setInterval(() => {
-      const now = moment();
-      const depTime = moment(ticket.departure_date_time);
-      const diff = depTime.diff(now);
+      const diff = moment(ticket.departure_date_time).diff(moment());
       if (diff <= 0) {
         setCountdown("Departure Passed");
         clearInterval(interval);
@@ -73,100 +73,118 @@ const TicketDetails = () => {
 
   if (!ticket) return <LoadingSpinner />;
 
-  const isDeparturePassed = moment(ticket.departure_date_time).isBefore(moment());
+  const isDeparturePassed = moment(ticket.departure_date_time).isBefore(
+    moment()
+  );
   const isZeroQuantity = ticket.ticket_quantity === 0;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      className="container mx-auto p-6"
+      className="max-w-6xl mx-auto px-4 py-12"
     >
-      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row gap-6">
-        
+      <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2 gap-6">
         {/* Image */}
-        <div className="md:w-1/2">
+        <div className="relative group">
           <img
             src={ticket.image}
             alt={ticket.title}
-            className="w-full h-full object-cover rounded-xl"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
+
+          <div className="absolute top-4 left-4 bg-green-50 border border-green-300 text-green-700 px-4 py-1 rounded-full text-xs font-bold flex items-center gap-2 shadow">
+            {transportIcon(ticket.transport_type)}
+            <span className="capitalize">{ticket.transport_type}</span>
+          </div>
         </div>
 
-        {/* Ticket Info */}
-        <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
-          
+        {/* Info */}
+        <div className="p-6 flex flex-col gap-4">
           {/* Title */}
-          <h2 className="text-2xl font-bold text-gray-800">{ticket.title}</h2>
+          <div>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+              {ticket.title}
+            </h2>
+            <p className="text-xs text-gray-500 mt-1">
+              Ticket Details & Journey Information
+            </p>
+          </div>
 
           {/* Route */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm">
-            <FaMapMarkerAlt className="text-red-500" />
-            <span className="font-medium">Route:</span>
-            <span>{ticket.from} → {ticket.to}</span>
-          </div>
-
-          {/* Transport Type + Quantity */}
-          <div className="flex items-center gap-4 text-gray-700 font-semibold">
-            <span className="flex items-center gap-1">
-              {transportIcon(ticket.transport_type)} {ticket.transport_type}
-            </span>
-            <span className="flex items-center gap-1 text-indigo-600">
-              <FaChair /> {ticket.ticket_quantity} Available
-            </span>
-          </div>
-
-          {/* Price */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm">
-            <span className="font-medium flex items-center gap-1">
-              <FaMoneyBillWave /> Price:
-            </span>
-            <span className="text-green-600 font-semibold">{ticket.price} BDT / Unit</span>
-          </div>
-
-          {/* Departure */}
-          <div className="flex items-center gap-2 text-gray-700 text-sm">
-            <FaClock className="text-orange-500" />
-            <span className="font-medium">Departure:</span>
-            <span>{moment(ticket.departure_date_time).format("MMMM Do, YYYY • h:mm A")}</span>
-          </div>
-
-          {/* Countdown */}
-          <div className="text-blue-600 font-bold text-lg">{countdown}</div>
-
-          {/* Perks */}
-          {ticket.perks && ticket.perks.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {ticket.perks.map((perk, i) => (
-                <span
-                  key={i}
-                  className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium hover:bg-green-200 transition cursor-default"
-                >
-                  {perk}
-                </span>
-              ))}
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <p className="text-xs font-bold text-gray-600 mb-1">ROUTE</p>
+            <div className="flex items-center gap-2 text-sm text-gray-800">
+              <FaMapMarkerAlt className="text-red-500" />
+              <span>{ticket.from}</span> → <span>{ticket.to}</span>
             </div>
-          )}
+          </div>
+
+          {/* Info Grid */}
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="bg-green-50 p-4 rounded-xl">
+              <p className="text-xs font-bold text-gray-600 mb-1">
+                AVAILABLE SEATS
+              </p>
+              <div className="flex items-center gap-2 font-semibold">
+                <FaChair className="text-green-600" />
+                {ticket.ticket_quantity}
+              </div>
+            </div>
+
+            <div className="bg-green-50 p-4 rounded-xl">
+              <p className="text-xs font-bold text-gray-600 mb-1">PRICE</p>
+              <div className="flex items-center gap-2 font-semibold text-green-700">
+                <FaMoneyBillWave />
+                {ticket.price} BDT
+              </div>
+            </div>
+
+            <div className="bg-orange-50 p-4 rounded-xl col-span-2">
+              <p className="text-xs font-bold text-gray-600 mb-1">
+                DEPARTURE TIME
+              </p>
+              <div className="flex items-center gap-2 text-sm">
+                <FaClock className="text-orange-500" />
+                {moment(ticket.departure_date_time).format(
+                  "MMMM Do, YYYY • h:mm A"
+                )}
+              </div>
+            </div>
+          </div>
+          {/* Countdown */}
+          <div className="bg-blue-50 border border-blue-200 text-blue-700 py-2 rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
+            <FaHourglassHalf className="text-blue-600" />
+            <span>{countdown}</span>
+          </div>
 
           {/* Description */}
-          <p className="text-gray-700 whitespace-pre-line"><span className="font-bold">Description: </span>{ticket.description}</p>
+          <div className="bg-gray-50 p-4 rounded-xl">
+            <p className="text-xs font-bold text-gray-600 mb-1">DESCRIPTION</p>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              {ticket.description}
+            </p>
+          </div>
 
-          {/* Book Button */}
+          {/* Button */}
           <button
-            className={`w-full py-3 rounded-lg text-white font-medium transition 
-              ${isDeparturePassed || isZeroQuantity ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}`}
             disabled={isDeparturePassed || isZeroQuantity}
             onClick={() => {
               if (!user) return navigate("/login");
               setOpenModal(true);
             }}
+            className={`mt-2 py-3 rounded-xl text-base font-bold text-white transition-all duration-300 shadow
+              ${
+                isDeparturePassed || isZeroQuantity
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-green-600 to-emerald-600 hover:scale-[1.03]"
+              }`}
           >
             Book Now
           </button>
         </div>
       </div>
 
-      {/* Modal Component */}
       {openModal && (
         <BookingModal
           ticket={ticket}
@@ -179,5 +197,3 @@ const TicketDetails = () => {
 };
 
 export default TicketDetails;
-
-

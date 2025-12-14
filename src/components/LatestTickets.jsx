@@ -8,7 +8,6 @@ import {
   FaPlaneDeparture,
   FaShip,
   FaMoneyBillWave,
-  FaChair,
 } from "react-icons/fa";
 
 const transportIcon = (type) => {
@@ -41,19 +40,21 @@ export default function LatestTickets() {
 
   return (
     <div className="my-14 max-w-7xl mx-auto px-4">
-      <h2 className="text-2xl font-bold mb-8 text-center">Latest Tickets</h2>
+      <h2 className="text-2xl font-bold mb-10 text-center text-gray-800">
+        Latest Tickets
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {tickets.map((t) => (
           <motion.div
             key={t._id}
-            whileHover={{ y: -5, scale: 1.03 }}
+            whileHover={{ y: -6, scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-white rounded-xl shadow-md hover:shadow-2xl overflow-hidden border flex flex-col"
+            className="relative bg-base-100 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all duration-300"
           >
-            {/* Transport Badge */}
-            <div className="absolute top-3 left-3 flex items-center gap-1 bg-orange-100 px-3 py-1 rounded-full text-xs font-semibold shadow">
+            {/* Transport Badge – Right Side Green */}
+            <div className="absolute top-3 right-3 flex items-center gap-1 bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-semibold border border-green-300 shadow-sm">
               {transportIcon(t.transport_type)}
               <span className="capitalize">{t.transport_type}</span>
             </div>
@@ -62,38 +63,41 @@ export default function LatestTickets() {
             <img
               src={t.image}
               alt={t.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-44 object-cover transition-transform duration-500 hover:scale-105"
             />
 
             {/* Content */}
-            <div className="p-4 flex flex-col flex-grow">
+            <div className="p-5 flex flex-col flex-grow gap-1">
               {/* Title */}
-              <h3 className="font-bold text-lg text-gray-800">{t.title}</h3>
+              <h3 className="font-semibold text-lg text-base-content leading-snug">
+                {t.title}
+              </h3>
 
               {/* Price */}
-              <div className="flex gap-1 text-sm text-gray-700 mt-2">
+              <div className="flex items-center gap-2 text-sm text-gray-700 mt-2">
                 <span className="font-medium">Price:</span>
                 <span className="flex items-center gap-1 text-green-600 font-semibold">
-                  <FaMoneyBillWave /> {t.price} BDT
+                  <FaMoneyBillWave />
+                  {t.price} BDT
                 </span>
               </div>
 
               {/* Quantity */}
-              <div className="flex gap-1 text-sm text-gray-700">
+              <div className="flex items-center gap-2 text-sm text-gray-700">
                 <span className="font-medium">Quantity:</span>
-                <span className="font-semibold flex items-center">
-                 <span className="text-yellow-400">{t.ticket_quantity} available</span>
+                <span className="text-amber-500 font-medium">
+                  {t.ticket_quantity} available
                 </span>
               </div>
 
-              {/* Perks inline */}
+              {/* Perks – one row */}
               {t.perks && t.perks.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 text-xs mt-2">
                   <span className="font-medium text-gray-600">Perks:</span>
                   {t.perks.map((perk, i) => (
                     <span
                       key={i}
-                      className="bg-green-100 text-green-700 px-2 py-1 rounded-full"
+                      className="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-200"
                     >
                       {perk}
                     </span>
@@ -101,10 +105,10 @@ export default function LatestTickets() {
                 </div>
               )}
 
-              {/* See Details Button */}
+              {/* Button */}
               <Link
                 to={`/ticket/${t._id}`}
-                className="mt-auto block w-full text-center bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-medium"
+                className="mt-auto block w-full text-center bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2.5 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 font-semibold shadow-md"
               >
                 See Details
               </Link>
@@ -115,4 +119,3 @@ export default function LatestTickets() {
     </div>
   );
 }
-

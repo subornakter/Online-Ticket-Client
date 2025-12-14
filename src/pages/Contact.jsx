@@ -9,7 +9,8 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 // ✅ Fix marker using CDN icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
@@ -22,7 +23,9 @@ function MapMarker({ searchText, position, setPosition }) {
     if (!searchText) return;
 
     const searchLocation = async () => {
-      const provider = new OpenStreetMapProvider({ params: { countrycodes: "bd" } });
+      const provider = new OpenStreetMapProvider({
+        params: { countrycodes: "bd" },
+      });
       const results = await provider.search({ query: searchText });
 
       if (results.length > 0) {
@@ -40,7 +43,11 @@ function MapMarker({ searchText, position, setPosition }) {
     searchLocation();
   }, [searchText, map, setPosition]);
 
-  return <Marker position={position}><Popup>{searchText || "Dhaka"}</Popup></Marker>;
+  return (
+    <Marker position={position}>
+      <Popup>{searchText || "Dhaka"}</Popup>
+    </Marker>
+  );
 }
 
 export default function ContactPage() {
@@ -51,7 +58,11 @@ export default function ContactPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       {/* HEADER */}
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center"
+      >
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
         <p className="text-gray-600 max-w-xl mx-auto">
           We're here to help! Reach out to TicketBari anytime — we respond fast.
@@ -59,18 +70,34 @@ export default function ContactPage() {
       </motion.div>
 
       {/* CONTACT INFO */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
         {[
-          { icon: <FiPhone className="text-3xl" />, title: "Phone", text: "+880 1234-567890" },
-          { icon: <FiMail className="text-3xl" />, title: "Email", text: "support@ticketbari.com" },
-          { icon: <FiMapPin className="text-3xl" />, title: "Location", text: "Dhaka, Bangladesh" },
+          {
+            icon: <FiPhone className="text-3xl" />,
+            title: "Phone",
+            text: "+880 1234-567890",
+          },
+          {
+            icon: <FiMail className="text-3xl" />,
+            title: "Email",
+            text: "support@ticketbari.com",
+          },
+          {
+            icon: <FiMapPin className="text-3xl" />,
+            title: "Location",
+            text: "Dhaka, Bangladesh",
+          },
         ].map((item, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.2 }}
-            className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer text-center space-y-3"
+            className="p-6 bg-base-100 rounded-xl shadow hover:shadow-lg transition cursor-pointer text-center space-y-3"
           >
             <div className="text-green-600 mx-auto">{item.icon}</div>
             <h3 className="font-bold text-xl">{item.title}</h3>
@@ -80,7 +107,11 @@ export default function ContactPage() {
       </motion.div>
 
       {/* MAP + SEARCH */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="space-y-5">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="space-y-5"
+      >
         <h2 className="text-2xl font-bold">Find Us on Map</h2>
 
         {/* Search Bar */}
@@ -102,18 +133,31 @@ export default function ContactPage() {
 
         {/* Map Embed */}
         <div className="w-full h-96 rounded-xl shadow overflow-hidden">
-          <MapContainer center={position} zoom={12} scrollWheelZoom={true} className="h-full w-full">
+          <MapContainer
+            center={position}
+            zoom={12}
+            scrollWheelZoom={true}
+            className="h-full w-full"
+          >
             <TileLayer
               attribution="&copy; OpenStreetMap contributors"
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <MapMarker searchText={submittedSearch} position={position} setPosition={setPosition} />
+            <MapMarker
+              searchText={submittedSearch}
+              position={position}
+              setPosition={setPosition}
+            />
           </MapContainer>
         </div>
       </motion.div>
 
       {/* CONTACT FORM */}
-      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="bg-white p-8 rounded-xl shadow">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="bg-base-100 p-8 rounded-xl shadow"
+      >
         <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
 
         <form className="space-y-5">

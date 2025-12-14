@@ -5,7 +5,11 @@ import { motion } from "framer-motion";
 export default function AdvertiseTickets() {
   const axiosSecure = useAxiosSecure();
 
-  const { data: tickets = [], isLoading, refetch } = useQuery({
+  const {
+    data: tickets = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["advertiseTickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin/advertise-tickets");
@@ -38,7 +42,7 @@ export default function AdvertiseTickets() {
         Manage Advertised Tickets
       </h2>
 
-      <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+      <div className="overflow-x-auto bg-base-100 shadow-lg rounded-lg">
         <table className="table w-full">
           <thead className="bg-gray-200 text-gray-700">
             <tr>

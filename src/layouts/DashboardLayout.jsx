@@ -16,9 +16,7 @@ export default function DashboardLayout() {
 
   const menuClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-2 rounded-md font-medium transition ${
-      isActive
-        ? "bg-green-500 text-white"
-        : "text-gray-700 hover:bg-gray-200"
+      isActive ? "bg-green-500 text-white" : "text-gray-700 hover:bg-gray-200"
     }`;
 
   if (isLoading) return <LoadingSpinner />;
@@ -39,7 +37,6 @@ export default function DashboardLayout() {
         </div>
 
         <nav className="flex flex-col gap-2">
-
           {/* ---------------- USER MENU ---------------- */}
           {role === "customer" && (
             <>
@@ -106,10 +103,9 @@ export default function DashboardLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-6 bg-white">
+      <main className="flex-1 p-6 bg-base-100">
         <Outlet />
       </main>
     </div>
   );
 }
-
