@@ -2,17 +2,10 @@
 import ErrorPage from '../pages/ErrorPage'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
-// import PlantDetails from '../pages/PlantDetails/PlantDetails'
-// import PrivateRoute from './PrivateRoute'
-// import DashboardLayout from '../layouts/DashboardLayout'
-// import AddPlant from '../pages/Dashboard/Seller/AddPlant'
-// import ManageUsers from '../pages/Dashboard/Admin/ManageUsers'
-// import Profile from '../pages/Dashboard/Common/Profile'
+
 // import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
-// import MyInventory from '../pages/Dashboard/Seller/MyInventory'
-// import ManageOrders from '../pages/Dashboard/Seller/ManageOrders'
-// import MyOrders from '../pages/Dashboard/Customer/MyOrders'
+
 import { createBrowserRouter } from 'react-router'
 import Home from '../pages/Home'
 import AddTicketForm from '../pages/AddTicketForm'
@@ -33,6 +26,8 @@ import RevenueOverview from '../pages/DashBoard/Vendor/RevenueOverview'
 import AdvertiseTickets from '../pages/DashBoard/Admin/AdvertiseTickets'
 import Contact from '../pages/Contact'
 import AboutUs from '../pages/AboutUs'
+import VendorRoute from './VendorRoute'
+import AdminRoute from './AdminRoute'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -55,7 +50,7 @@ export const router = createBrowserRouter([
         path: '/payment-success',
         element: <PaymentSuccess/>,
       },
-     { path: '/all-tickets', element: <AllTickets/> },
+     { path: '/all-tickets', element: <PrivateRoute><AllTickets/></PrivateRoute> },
          
       { path: '/contact', element: <Contact/> },
           { path: '/about', element: <AboutUs/> },
@@ -82,7 +77,7 @@ export const router = createBrowserRouter([
         ),
       },
         { path: 'add-ticket', 
-          element: <AddTicketForm/> },
+          element: <PrivateRoute><AddTicketForm/></PrivateRoute> },
       {
         path: 'bookings',
         element: (
@@ -104,7 +99,7 @@ export const router = createBrowserRouter([
   path: "my-tickets",
   element: (
     <PrivateRoute>
-      <MyAddedTickets/>
+    <VendorRoute> <MyAddedTickets/></VendorRoute>
     </PrivateRoute>
   ),
 }
@@ -112,14 +107,14 @@ export const router = createBrowserRouter([
 { path: "vendor-bookings",
   element: (
     <PrivateRoute>
-      <VendorBookings/>
+      <VendorRoute><VendorBookings/></VendorRoute>
     </PrivateRoute>
   ),
 },
 { path: "vendor-revenue",
   element: (
     <PrivateRoute>
-      <RevenueOverview></RevenueOverview>
+      <VendorRoute><RevenueOverview/></VendorRoute>
     </PrivateRoute>
   ),
 },
@@ -136,7 +131,7 @@ export const router = createBrowserRouter([
     path: "manage-users",
     element: (
       <PrivateRoute>
-        <ManageUsers/>
+        <AdminRoute><ManageUsers/></AdminRoute>
       </PrivateRoute>
     ),
   },
@@ -152,7 +147,7 @@ export const router = createBrowserRouter([
     path: "manage-tickets",
     element: (
       <PrivateRoute>
-        <ManageTickets/>
+        <AdminRoute><ManageTickets/></AdminRoute>
       </PrivateRoute>
     ),
   },
@@ -160,46 +155,11 @@ export const router = createBrowserRouter([
     path: "advertise-tickets",
     element: (
       <PrivateRoute>
-        <AdvertiseTickets/>
+      <AdminRoute>  <AdvertiseTickets/></AdminRoute>
       </PrivateRoute>
     ),
   }
-      // {
-      //   path: 'my-inventory',
-      //   element: (
-      //     <PrivateRoute>
-      //       <MyInventory />
-      //     </PrivateRoute>
-      //   ),
-      // },
-      // {
-      //   path: 'manage-users',
-      //   element: (
-      //     <PrivateRoute>
-      //       <ManageUsers />
-      //     </PrivateRoute>
-      //   ),
-      // },
-      // {
-      //   path: 'profile',
-      //   element: (
-      //     <PrivateRoute>
-      //       <Profile />
-      //     </PrivateRoute>
-      //   ),
-      // },
-      // {
-      //   path: 'my-orders',
-      //   element: (
-      //     <PrivateRoute>
-      //       <MyOrders />
-      //     </PrivateRoute>
-      //   ),
-      // },
-      // {
-      //   path: 'manage-orders',
-      //   element: <ManageOrders />,
-      // },
+
     ],
   },
 ])
