@@ -28,6 +28,7 @@ import Contact from '../pages/Contact'
 import AboutUs from '../pages/AboutUs'
 import VendorRoute from './VendorRoute'
 import AdminRoute from './AdminRoute'
+import Statistics from '../pages/DashBoard/Common/Statistics.jsx'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -72,7 +73,7 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <PrivateRoute>
-           <UserProfile/>
+           <Statistics></Statistics>
           </PrivateRoute>
         ),
       },

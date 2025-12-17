@@ -2,7 +2,7 @@ import { Navigate } from 'react-router'
 import LoadingSpinner from '../components/LoadingSpinner'
 import useRole from '../hooks/useRole'
 
-const SellerRoute = ({ children }) => {
+const VendorRoute = ({ children }) => {
   const [role, isRoleLoading] = useRole()
 
   if (isRoleLoading) return <LoadingSpinner />
@@ -10,4 +10,4 @@ const SellerRoute = ({ children }) => {
   return <Navigate to='/' replace='true' />
 }
 
-export default SellerRoute
+export default VendorRoute
