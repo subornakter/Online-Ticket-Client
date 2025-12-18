@@ -17,13 +17,13 @@ import LoadingSpinner from "./LoadingSpinner";
 const transportIcon = (type) => {
   switch (type) {
     case "bus":
-      return <FaBusAlt className="text-emerald-600 text-lg" />;
+      return <FaBusAlt className="text-lg text-emerald-600" />;
     case "train":
-      return <FaTrain className="text-teal-600 text-lg" />;
+      return <FaTrain className="text-lg text-teal-600" />;
     case "plane":
-      return <FaPlaneDeparture className="text-sky-600 text-lg" />;
+      return <FaPlaneDeparture className="text-lg text-sky-600" />;
     case "launch":
-      return <FaShip className="text-cyan-600 text-lg" />;
+      return <FaShip className="text-lg text-cyan-600" />;
     default:
       return null;
   }
@@ -43,23 +43,23 @@ export default function AdvertisementSection() {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="my-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="px-4 my-12">
+      <div className="mx-auto max-w-7xl">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-bold text-center mb-10 text-base-content"
+          className="mb-10 text-3xl font-bold text-center text-base-content"
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
             Advertisement Tickets
           </span>
-          <div className="mt-2 flex justify-center">
-            <FaLeaf className="text-green-500 text-2xl" />
+          <div className="flex justify-center mt-2">
+            <FaLeaf className="text-2xl text-green-500" />
           </div>
         </motion.h2>
 
-        <div className=" bg-base-100 grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6  bg-base-100 md:grid-cols-2 lg:grid-cols-3">
           {tickets.map((t, index) => (
             <motion.div
               key={t._id}
@@ -67,11 +67,11 @@ export default function AdvertisementSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="relative group bg-base-100 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-green-200 flex flex-col h-full"
+              className="relative flex flex-col h-full overflow-hidden transition-all duration-500 border border-green-200 shadow-md group bg-base-100 rounded-xl hover:shadow-xl"
             >
               {/* Badge */}
-              <div className="absolute top-3 left-3 z-10 flex items-center gap-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow">
-                <FaStar className="animate-pulse text-xs" />
+              <div className="absolute z-10 flex items-center gap-1 px-3 py-1 text-xs font-bold text-white rounded-full shadow top-3 left-3 bg-gradient-to-r from-amber-400 to-orange-500">
+                <FaStar className="text-xs animate-pulse" />
                 Advertisement
               </div>
 
@@ -80,14 +80,14 @@ export default function AdvertisementSection() {
                 <img
                   src={t.image}
                   alt={t.title}
-                  className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="object-cover w-full h-40 transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
 
               {/* Content */}
-              <div className="p-4 space-y-3 bg-gradient-to-b from-white to-green-50 flex-grow flex flex-col justify-between">
+              <div className="flex flex-col justify-between flex-grow p-4 space-y-3 bg-gradient-to-b from-white to-green-50">
                 <div className="space-y-3">
-                  <h3 className="font-bold text-lg text-gray-800 line-clamp-2">
+                  <h3 className="text-lg font-bold text-gray-800 line-clamp-2">
                     {t.title}
                   </h3>
 
@@ -122,14 +122,14 @@ export default function AdvertisementSection() {
                   {t.perks && t.perks.length > 0 && (
                     <div className="space-y-1">
                       <div className="flex items-center gap-1 text-sm font-medium text-gray-700">
-                        <FaLeaf className="text-green-600 text-sm" />
+                        <FaLeaf className="text-sm text-green-600" />
                         Perks:
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {t.perks.map((perk, i) => (
                           <span
                             key={i}
-                            className="bg-green-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-medium border border-green-300"
+                            className="px-3 py-1 text-xs font-medium bg-green-100 border border-green-300 rounded-full text-emerald-800"
                           >
                             {perk}
                           </span>
