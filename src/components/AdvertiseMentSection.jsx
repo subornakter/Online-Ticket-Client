@@ -59,7 +59,7 @@ export default function AdvertisementSection() {
           </div>
         </motion.h2>
 
-        <div className="grid grid-cols-1 gap-6  bg-base-100 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 bg-base-100 md:grid-cols-2 lg:grid-cols-3">
           {tickets.map((t, index) => (
             <motion.div
               key={t._id}

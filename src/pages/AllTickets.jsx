@@ -3,7 +3,7 @@ import axios from "axios";
 import TicketCard from "../components/TicketCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
-import { FaSearch, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt, FaCalendarAlt,FaFilter } from "react-icons/fa";
 
 const AllTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -91,15 +91,15 @@ const AllTickets = () => {
   return (
     <div className="p-5">
       {/* PAGE TITLE */}
-      <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+      <h1 className="mb-6 text-3xl font-bold text-center text-transparent md:text-4xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text">
         Explore All Tickets
       </h1>
 
       {/* 🔍 SEARCH + SORT BAR */}
-      <div className="bg-base-100 shadow-lg rounded-xl p-4 mb-6">
-        <div className="flex flex-col lg:flex-row items-center gap-4">
+      <div className="p-4 mb-6 shadow-lg bg-base-100 rounded-xl">
+        <div className="flex flex-col items-center gap-4 lg:flex-row">
           {/* From */}
-          <div className="flex items-center gap-2 border border-green-400 px-4 py-3 rounded-lg w-full">
+          <div className="flex items-center w-full gap-2 px-4 py-3 border border-green-400 rounded-lg">
             <FaMapMarkerAlt className="text-green-600" />
             <input
               type="text"
@@ -111,7 +111,7 @@ const AllTickets = () => {
           </div>
 
           {/* To */}
-          <div className="flex items-center gap-2 border border-green-400 px-4 py-3 rounded-lg w-full">
+          <div className="flex items-center w-full gap-2 px-4 py-3 border border-green-400 rounded-lg">
             <FaMapMarkerAlt className="text-green-600" />
             <input
               type="text"
@@ -123,7 +123,7 @@ const AllTickets = () => {
           </div>
 
           {/* Date */}
-          <div className="flex items-center gap-2 border border-green-400 px-4 py-3 rounded-lg w-full">
+          <div className="flex items-center w-full gap-2 px-4 py-3 border border-green-400 rounded-lg">
             <FaCalendarAlt className="text-green-600" />
             <input
               type="date"
@@ -136,7 +136,7 @@ const AllTickets = () => {
           {/* SEARCH BUTTON with gradient */}
           <button
             onClick={handleSearch}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-lg hover:from-green-700 hover:to-emerald-700 transition w-full lg:w-auto"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 text-white transition rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 lg:w-auto"
           >
             <FaSearch />
             Search
@@ -144,13 +144,13 @@ const AllTickets = () => {
         </div>
 
         {/* SORT DROPDOWN */}
-        <div className="mt-4 flex justify-end">
+        <div className="flex justify-end mt-4">
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            className="border border-green-400 rounded-lg px-3 py-2 outline-none"
+            className="px-3 py-2 border border-green-400 rounded-lg outline-none"
           >
-            <option value="none">Sort by Price</option>
+            <option value="none"><FaFilter className="text-green-600" />Sort by Price</option>
             <option value="asc">Low to High</option>
             <option value="desc">High to Low</option>
           </select>
@@ -158,7 +158,7 @@ const AllTickets = () => {
       </div>
 
       {/* RESULTS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {currentTickets.length > 0 ? (
           currentTickets.map((ticket) => (
             <TicketCard key={ticket._id} ticket={ticket} />
@@ -172,7 +172,7 @@ const AllTickets = () => {
 
       {/* PAGINATION */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-6 gap-2">
+        <div className="flex justify-center gap-2 mt-6">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}

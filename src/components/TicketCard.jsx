@@ -47,37 +47,34 @@ const TicketCard = ({ ticket }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-base-100 rounded-xl shadow-md hover:shadow-xl transition overflow-hidden"
+      className="flex flex-col h-full overflow-hidden transition shadow-md bg-base-100 rounded-xl hover:shadow-xl"
     >
       {/* Image */}
       <div className="relative">
-        <img src={image} alt={title} className="h-48 w-full object-cover" />
+        <img src={image} alt={title} className="object-cover w-full h-48" />
 
         {/* Transport Badge */}
-        <div className="absolute top-3 right-3 flex items-center gap-2 bg-orange-100 px-3 py-1 rounded-full text-sm font-medium shadow">
-          <span className="text-green-600">
-            {" "}
-            {getTransportIcon(transport_type)}{" "}
-          </span>
+        <div className="absolute flex items-center gap-2 px-3 py-1 text-sm font-medium bg-orange-100 rounded-full shadow top-3 right-3">
+          <span className="text-green-600">{getTransportIcon(transport_type)}</span>
           <span className="capitalize">{transport_type}</span>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-4 space-y-3">
+      <div className="flex flex-col flex-1 p-4 space-y-3">
         {/* Title */}
         <h2 className="text-lg font-bold text-base-content">{title}</h2>
 
         {/* Route */}
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <FaMapMarkerAlt className="text-red-500" />
-          <span className="font-medium">{from}</span>
-          <span>→</span>
-          <span className="font-medium">{to}</span>
+          <span className="font-medium">{from}</span> → <span className="font-medium">{to}</span>
         </div>
 
+        <hr className="my-4 border-t-2 border-gray-300" />
+
         {/* Info */}
-        <div className="text-sm text-gray-700 space-y-1">
+        <div className="space-y-1 text-sm text-gray-700">
           {/* Price */}
           <p className="flex items-center gap-2">
             <FaMoneyBillWave className="text-green-600" />
@@ -89,9 +86,7 @@ const TicketCard = ({ ticket }) => {
           <p className="flex items-center gap-2">
             <FaChair className="text-indigo-600" />
             <span className="font-medium text-gray-600">Available Seats:</span>
-            <span className="font-semibold text-yellow-500">
-              {ticket_quantity}
-            </span>
+            <span className="font-semibold text-yellow-500">{ticket_quantity}</span>
           </p>
 
           {/* Departure */}
@@ -112,22 +107,25 @@ const TicketCard = ({ ticket }) => {
           {perks.map((perk, index) => (
             <span
               key={index}
-              className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded-full"
+              className="px-3 py-1 text-xs text-green-700 bg-green-100 rounded-full"
             >
               {perk}
             </span>
           ))}
         </div>
 
-        {/* Button */}
-        <Link to={`/ticket/${_id}`}>
-          <button className="w-full mt-3 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
-            See Details
-          </button>
-        </Link>
+        {/* Button pushed to bottom */}
+        <div className="mt-auto">
+          <Link to={`/ticket/${_id}`}>
+            <button className="w-full py-2 mt-3 font-medium text-white transition rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:bg-green-700">
+              See Details
+            </button>
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
 };
 
 export default TicketCard;
+

@@ -81,51 +81,51 @@ const AddTicketForm = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="w-full min-h-[calc(100vh-40px)] flex justify-center items-center bg-gray-50 p-5 rounded-xl"
+      className="w-full min-h-[calc(100vh-40px)] flex justify-center items-center bg-base-100 p-3 sm:p-5 rounded-xl"
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl bg-base-100 p-8 rounded-2xl shadow-lg space-y-6"
+        className="w-full max-w-4xl p-6 space-y-6 shadow-lg sm:max-w-full bg-base-100 sm:p-8 rounded-2xl"
       >
         {/* Form Title */}
-        <h1 className="text-3xl font-bold text-green-700 text-center mb-6">
+        <h1 className="mb-6 text-3xl font-bold text-center text-green-700">
           Add New Ticket
         </h1>
 
         {/* Ticket Title */}
         <div className="space-y-1">
-          <label className="text-gray-700 font-semibold">Ticket Title</label>
+          <label className="font-semibold text-gray-700">Ticket Title</label>
           <input
             type="text"
             placeholder="Dhaka → Sylhet (AC Coach)"
             {...register("title", { required: "Title required" })}
-            className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+            className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
           />
           {errors.title && (
-            <p className="text-red-500 text-sm">{errors.title.message}</p>
+            <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
         </div>
 
         {/* From / To */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-1">
-            <label className="font-semibold flex items-center gap-2">
+            <label className="flex items-center gap-2 font-semibold">
               <FaMapMarkerAlt className="text-green-500" /> From
             </label>
             <input
               type="text"
               {...register("from", { required: true })}
-              className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+              className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
             />
           </div>
           <div className="space-y-1">
-            <label className="font-semibold flex items-center gap-2">
+            <label className="flex items-center gap-2 font-semibold">
               <FaMapMarkerAlt className="text-green-500" /> To
             </label>
             <input
               type="text"
               {...register("to", { required: true })}
-              className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+              className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ const AddTicketForm = () => {
           <label className="font-semibold">Transport Type</label>
           <select
             {...register("transport_type", { required: true })}
-            className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+            className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
           >
             <option value="bus">Bus</option>
             <option value="train">Train</option>
@@ -145,13 +145,13 @@ const AddTicketForm = () => {
         </div>
 
         {/* Price & Quantity */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-1">
             <label className="font-semibold">Price (per unit)</label>
             <input
               type="number"
               {...register("price", { required: true, min: 0 })}
-              className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+              className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
             />
           </div>
 
@@ -160,7 +160,7 @@ const AddTicketForm = () => {
             <input
               type="number"
               {...register("ticket_quantity", { required: true, min: 1 })}
-              className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+              className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
             />
           </div>
         </div>
@@ -172,7 +172,7 @@ const AddTicketForm = () => {
             type="text"
             placeholder="AC, Reclining seat, On-board restroom"
             {...register("perks", { required: true })}
-            className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+            className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
           />
         </div>
 
@@ -181,7 +181,7 @@ const AddTicketForm = () => {
           <label className="font-semibold">Description</label>
           <textarea
             {...register("description", { required: true })}
-            className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg h-32 focus:ring-2 focus:ring-green-300 outline-none transition"
+            className="w-full h-32 px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
           ></textarea>
         </div>
 
@@ -191,7 +191,7 @@ const AddTicketForm = () => {
           <input
             type="datetime-local"
             {...register("departure_date_time", { required: true })}
-            className="w-full px-4 py-2 border border-green-200 bg-green-50 rounded-lg focus:ring-2 focus:ring-green-300 outline-none transition"
+            className="w-full px-4 py-2 transition border border-green-200 rounded-lg outline-none bg-green-50 focus:ring-2 focus:ring-green-300"
           />
         </div>
 
@@ -207,14 +207,14 @@ const AddTicketForm = () => {
         </div>
 
         {/* Vendor Info (readonly) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-100 p-4 rounded-lg border">
+        <div className="grid grid-cols-1 gap-4 p-4 bg-gray-100 border rounded-lg md:grid-cols-2">
           <div className="space-y-1">
             <label className="font-semibold">Vendor Name</label>
             <input
               type="text"
               value={user?.displayName || ""}
               readOnly
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed"
+              className="w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-lg cursor-not-allowed"
             />
           </div>
 
@@ -224,7 +224,7 @@ const AddTicketForm = () => {
               type="email"
               value={user?.email || ""}
               readOnly
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed"
+              className="w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-lg cursor-not-allowed"
             />
           </div>
         </div>
@@ -232,10 +232,10 @@ const AddTicketForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl flex justify-center items-center gap-2 font-semibold shadow-md hover:from-green-700 hover:to-emerald-700 transition-all duration-300"
+          className="flex items-center justify-center w-full gap-2 py-3 font-semibold text-white transition-all duration-300 shadow-md bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-700 hover:to-emerald-700"
         >
           {isPending ? (
-            <TbFidgetSpinner className="animate-spin text-lg" />
+            <TbFidgetSpinner className="text-lg animate-spin" />
           ) : (
             <>
               <TbTicket className="text-lg" /> Add Ticket

@@ -75,7 +75,7 @@ const Navbar = () => {
 
       {/* ===== Right ===== */}
       <div className="gap-3 navbar-end">
-        {/* 🌞🌙 Theme Toggle */}
+
         <button
           onClick={toggleTheme}
           className="text-xl btn btn-ghost btn-circle"
@@ -84,7 +84,7 @@ const Navbar = () => {
         </button>
 
         {!user ? (
-          // 🔓 Not Logged In
+      
           <div className="flex gap-2">
             <NavLink to="/login" className="px-4 py-2 font-semibold text-white rounded bg-gradient-to-r from-green-600 to-emerald-600">
               Login
@@ -94,7 +94,7 @@ const Navbar = () => {
             </NavLink>
           </div>
         ) : (
-          // 🔐 Logged In
+        
           <div className="relative flex items-center gap-3">
             {/* Profile Area */}
             <div className="relative">
@@ -103,7 +103,7 @@ const Navbar = () => {
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
               >
                 <img
-                  className="border rounded-full cursor-pointer w-9 h-9"
+                  className="border-2 border-green-600 rounded-full cursor-pointer w-9 h-9"
                   src={user.photoURL || avatarImg}
                   alt="profile"
                 />

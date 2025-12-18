@@ -3,47 +3,43 @@ import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Countdown from "react-countdown";
-import { Link } from "react-router";
+import { motion } from "framer-motion";
+import { FaMapMarkerAlt, FaChair, FaMoneyBillWave, FaClock } from "react-icons/fa";
 
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
   const { user } = useAuth();
 
+  const handlePayment = async (booking) => {
+    try {
+      const token = await user.getIdToken();
 
-const handlePayment = async (booking) => {
-  try {
-    const token = await user.getIdToken();
+      const paymentInfo = {
+        _id: booking._id,
+        ticketId: booking.ticketId,
+        title: booking.title,
+        image: booking.image,
+        price: booking.price,
+        quantity: booking.quantity,
+        totalPrice: booking.price * booking.quantity,
+        userEmail: user.email,
+        from: booking.from,
+        to: booking.to,
+        departureTime: new Date(booking.departureTime).toISOString(),
+      };
 
-    const paymentInfo = {
-      _id: booking._id,
-      ticketId: booking.ticketId,
-      title: booking.title,
-      image: booking.image,
-      price: booking.price,
-      quantity: booking.quantity,
-      userEmail: user.email,  // Add this!
-      from: booking.from,
-      to: booking.to,
-         departureTime: new Date(booking.departureTime).toISOString(),
-    };
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+        paymentInfo,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/create-checkout-session`,
-      paymentInfo,
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    );
-
-    // Redirect to Stripe Checkout
-    window.location.href = data.url;
-  } catch (err) {
-    console.log(err);
-    toast.error("Payment failed!");
-  }
-};
-
-
+      window.location.href = data.url;
+    } catch (err) {
+      console.log(err);
+      toast.error("Payment failed!");
+    }
+  };
 
   useEffect(() => {
     if (!user?.email) return;
@@ -53,11 +49,7 @@ const handlePayment = async (booking) => {
         const token = await user.getIdToken();
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/my-bookings?email=${user.email}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setBookings(res.data);
       } catch (error) {
@@ -70,127 +62,106 @@ const handlePayment = async (booking) => {
   }, [user]);
 
   const renderCountdown = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {
-      return <span className="text-red-600 font-bold">Expired</span>;
-    }
+    if (completed) return <span className="font-bold text-red-600">Expired</span>;
     return (
-      <span className="text-green-600 font-semibold">
+      <span className="font-semibold text-green-600">
         {days}d:{hours}h:{minutes}m:{seconds}s
       </span>
     );
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-center">My Booked Tickets</h2>
+    <div className="p-4 mx-auto space-y-6 md:p-6 lg:p-8 max-w-7xl">
+      <h2 className="text-2xl font-bold text-center text-gray-800 md:text-3xl">
+        My Booked Tickets
+      </h2>
 
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="table w-full">
-          <thead className="bg-gray-200 text-gray-700">
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>From → To</th>
-              <th>Qty</th>
-              <th>Total Price</th>
-              <th>Departure</th>
-              <th>Countdown</th>
-              <th>Status</th>
-              <th>Pay</th>
-            </tr>
-          </thead>
+      {bookings.length === 0 ? (
+        <p className="py-6 text-center text-gray-500">No bookings found.</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {bookings.map((booking) => {
+            const isExpired = new Date(booking.departureTime) < new Date();
+            return (
+              <motion.div
+                key={booking._id}
+                whileHover={{ scale: 1.03, boxShadow: "0 8px 20px rgba(0,0,0,0.1)" }}
+                className="p-4 transition bg-white border border-gray-200 rounded-lg shadow-md"
+              >
+               <div className="flex items-center justify-between mb-2">
+  <h3 className="text-lg font-semibold">{booking.title}</h3>
 
-          <tbody>
-            {bookings.map((booking) => {
-              const isExpired =
-                new Date(booking.departureTime) < new Date();
+  {/* Status Badge */}
+  <span
+    className={`px-3 py-1 text-xs font-bold rounded-full ${
+      booking.status === "pending"
+        ? "bg-yellow-100 text-yellow-800"
+        : booking.status === "accepted"
+        ? "bg-blue-100 text-blue-800"
+        : booking.status === "paid"
+        ? "bg-green-100 text-green-800"
+        : "bg-red-100 text-red-800"
+    }`}
+  >
+    {booking.status.toUpperCase()}
+  </span>
+</div>
 
-              return (
-                <tr key={booking._id}>
-                  <td>
-                    <img
-                      src={booking.image}
-                      alt={booking.title}
-                      className="h-12 w-20 object-cover rounded"
-                    />
-                  </td>
 
-                  <td className="font-semibold">{booking.title}</td>
+                <img
+                  src={booking.image}
+                  alt={booking.title}
+                  className="object-cover w-full h-40 mb-3 rounded-md"
+                />
 
-                  <td>
-                    {booking.from} → {booking.to}
-                  </td>
-
-                  <td>{booking.quantity}</td>
-
-                  <td className="font-bold text-blue-600">${booking.price}</td>
-
-                  <td>{new Date(booking.departureTime).toLocaleString()}</td>
-
-                  <td>
+                <div className="space-y-2 text-sm text-gray-700">
+                  <p className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-red-500" /> {booking.from} → {booking.to}
+                  </p>
+                  
+        <hr className="my-4 border-t-2 border-gray-300" />
+                  <p className="flex items-center gap-2">
+                    <FaChair className="text-indigo-600" /> Quantity: {booking.quantity}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <FaMoneyBillWave className="text-green-600" /> Total Price:{" "}
+                    <span className="font-bold text-blue-600">${booking.price * booking.quantity}</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <FaClock className="text-orange-500" /> Departure:{" "}
+                    {new Date(booking.departureTime).toLocaleString()}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <FaClock className="text-green-600" /> Countdown:{" "}
                     {booking.status !== "rejected" ? (
-                      <Countdown
-                        date={new Date(booking.departureTime)}
-                        renderer={renderCountdown}
-                      />
+                      <Countdown date={new Date(booking.departureTime)} renderer={renderCountdown} />
                     ) : (
                       <span className="text-red-500">---</span>
                     )}
-                  </td>
+                  </p>
+                </div>
 
-                  <td
-                    className={`font-bold ${
-                      booking.status === "pending"
-                        ? "text-yellow-600"
-                        : booking.status === "accepted"
-                        ? "text-blue-600"
-                        : booking.status === "paid"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
+                {booking.status === "accepted" && !isExpired ? (
+                  <button
+                    onClick={() => handlePayment(booking)}
+                    className="w-full px-4 py-2 mt-3 text-white transition bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
-                    {booking.status.toUpperCase()}
-                  </td>
-
-                  {/* <td>
-                    {booking.status === "accepted" && !isExpired ? (
-                      <Link to={`/payment/${booking._id}`}>
-                        <button className="btn btn-sm btn-primary">
-                          Pay Now
-                        </button>
-                      </Link>
-                    ) : isExpired && booking.status === "accepted" ? (
-                      <span className="text-gray-400 text-sm">
-                        Time passed
-                      </span>
-                    ) : (
-                      <span className="text-gray-400 text-sm">N/A</span>
-                    )}
-                  </td> */}
-                  <td>
-  {booking.status === "accepted" && !isExpired ? (
-    <button
-      onClick={() => handlePayment(booking)}
-      type="button"
-      className="cursor-pointer inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-    >
-      Pay Now
-    </button>
-  ) : isExpired && booking.status === "accepted" ? (
-    <span className="text-gray-400 text-sm">Time passed</span>
-  ) : (
-    <span className="text-gray-400 text-sm">N/A</span>
-  )}
-</td>
-
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                    Pay Now
+                  </button>
+                ) : isExpired && booking.status === "accepted" ? (
+                  <span className="block mt-3 text-sm text-gray-400">Time passed</span>
+                ) : null}
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
 
 export default MyBooking;
+
+
+
+

@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { FaDollarSign, FaTicketAlt, FaPlusCircle } from "react-icons/fa";
 
 const COLORS = ["#4ade80", "#60a5fa", "#f472b6"]; // green, blue, pink
 
@@ -28,9 +29,7 @@ const RevenueOverview = () => {
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_API_URL}/vendor/revenue-overview`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
           setData(res.data);
         } catch (err) {
@@ -49,15 +48,16 @@ const RevenueOverview = () => {
 
   return (
     <motion.div
-      className="p-6 bg-base-100 rounded-xl shadow-lg"
+      className="p-6 bg-white shadow-lg dark:bg-gray-800 rounded-xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-2xl font-semibold mb-6 text-center">
+      <h2 className="mb-6 text-2xl font-bold text-center text-gray-800 dark:text-gray-100">
         Revenue Overview
       </h2>
 
+      {/* Chart */}
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -68,7 +68,11 @@ const RevenueOverview = () => {
             cy="50%"
             outerRadius={100}
             fill="#8884d8"
-            label
+            label={({ name, percent }) =>
+              `${name}: ${(percent * 100).toFixed(0)}%`
+            }
+            labelLine={true}
+            isAnimationActive={true}
           >
             {pieData.map((entry, index) => (
               <Cell
@@ -78,39 +82,48 @@ const RevenueOverview = () => {
             ))}
           </Pie>
           <Tooltip
-            formatter={(value) => (typeof value === "number" ? value : value)}
+            formatter={(value) =>
+              typeof value === "number" ? value.toLocaleString() : value
+            }
+            contentStyle={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
           />
           <Legend verticalAlign="bottom" height={36} />
         </PieChart>
       </ResponsiveContainer>
 
-      <div className="flex justify-around mt-8 text-center">
+      {/* Metric Cards */}
+      <div className="flex flex-col flex-wrap justify-center gap-4 mt-8 md:flex-row">
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="bg-green-50 p-4 rounded-lg w-1/3 mx-2"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-green-400 to-green-600 rounded-xl min-w-[250px] flex-1"
         >
-          <h3 className="text-lg font-medium">Total Revenue</h3>
-          <p className="text-green-600 font-bold text-xl">
-            ${data.totalRevenue}
-          </p>
+          <FaDollarSign className="text-3xl" />
+          <div>
+            <h3 className="text-lg font-semibold">Total Revenue</h3>
+            <p className="text-xl font-bold">${data.totalRevenue.toLocaleString()}</p>
+          </div>
         </motion.div>
+
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="bg-blue-50 p-4 rounded-lg w-1/3 mx-2"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl min-w-[250px] flex-1"
         >
-          <h3 className="text-lg font-medium">Tickets Sold</h3>
-          <p className="text-blue-600 font-bold text-xl">
-            {data.totalTicketsSold}
-          </p>
+          <FaTicketAlt className="text-3xl" />
+          <div>
+            <h3 className="text-lg font-semibold">Tickets Sold</h3>
+            <p className="text-xl font-bold">{data.totalTicketsSold}</p>
+          </div>
         </motion.div>
+
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="bg-pink-50 p-4 rounded-lg w-1/3 mx-2"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-pink-400 to-pink-600 rounded-xl min-w-[250px] flex-1"
         >
-          <h3 className="text-lg font-medium">Tickets Added</h3>
-          <p className="text-pink-600 font-bold text-xl">
-            {data.totalTicketsAdded}
-          </p>
+          <FaPlusCircle className="text-3xl" />
+          <div>
+            <h3 className="text-lg font-semibold">Tickets Added</h3>
+            <p className="text-xl font-bold">{data.totalTicketsAdded}</p>
+          </div>
         </motion.div>
       </div>
     </motion.div>
@@ -118,3 +131,4 @@ const RevenueOverview = () => {
 };
 
 export default RevenueOverview;
+

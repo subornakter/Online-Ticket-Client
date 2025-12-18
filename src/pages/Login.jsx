@@ -1,6 +1,5 @@
-import { Link, Navigate, useLocation, useNavigate } from "react-router";
+import { Link, Navigate, useLocation, useNavigate, NavLink } from "react-router";
 import toast from "react-hot-toast";
-
 import { FcGoogle } from "react-icons/fc";
 import { TbFidgetSpinner } from "react-icons/tb";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -17,7 +16,6 @@ const Login = () => {
   if (loading) return <LoadingSpinner />;
   if (user) return <Navigate to={from} replace={true} />;
 
-  // form submit handler
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -25,15 +23,12 @@ const Login = () => {
     const password = form.password.value;
 
     try {
-      //User Login
       const { user } = await signIn(email, password);
-
       await saveOrUpdateUser({
         name: user?.displayName,
         email: user?.email,
         image: user?.photoURL,
       });
-
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
@@ -42,12 +37,9 @@ const Login = () => {
     }
   };
 
-  // Handle Google Signin
   const handleGoogleSignIn = async () => {
     try {
-      //User Registration using google
       const { user } = await signInWithGoogle();
-
       await saveOrUpdateUser({
         name: user?.displayName,
         email: user?.email,
@@ -61,97 +53,98 @@ const Login = () => {
       toast.error(err?.message);
     }
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-100">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
-        <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold">Log In</h1>
-          <p className="text-sm text-gray-400">
-            Sign in to access your account
-          </p>
+    <div className="flex items-center justify-center min-h-screen p-4 transition-colors duration-300 bg-base-100 dark:bg-slate-950">
+      <div className="flex flex-col w-full max-w-md p-6 text-gray-900 transition-all border border-gray-100 shadow-2xl bg-base-100 dark:bg-slate-900 dark:border-slate-800 rounded-3xl">
+        
+        {/* Logo & Brand Name */}
+        <div className="flex flex-col items-center mb-4">
+          <NavLink to="/" className="flex flex-col items-center group">
+            <img
+              className="transition-transform duration-300 w-14 h-14 group-hover:scale-110"
+              src="https://i.ibb.co.com/bR2Kqky6/logo4-removebg-preview.png"
+              alt="logo"
+            />
+             <h2 className="mt-1 text-2xl font-bold">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Ticket</span>Bari
+            </h2>
+          </NavLink>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          noValidate=""
-          action=""
-          className="space-y-6 ng-untouched ng-pristine ng-valid"
-        >
+
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-black text-gray-600 uppercase dark:text-gray-100">Welcome Back</h1>
+          <p className="mt-0.5 text-[10px] font-bold  text-gray-400 uppercase">Sign in to your account</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
+            {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block mb-2 text-sm">
-                Email address
-              </label>
+              <label className="block mb-1 text-[10px] font-black  text-gray-500 uppercase dark:text-gray-400">Email Address</label>
               <input
                 type="email"
                 name="email"
-                id="email"
                 required
-                placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
-                data-temp-mail-org="0"
+                placeholder="email@example.com"
+                className="w-full px-4 py-2.5 text-sm transition-all border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-100 dark:placeholder-gray-500"
               />
             </div>
+
+            {/* Password Field */}
             <div>
               <div className="flex justify-between">
-                <label htmlFor="password" className="text-sm mb-2">
-                  Password
-                </label>
+                <label className="block mb-1 text-[10px] font-black  text-gray-500 uppercase dark:text-gray-400">Password</label>
               </div>
               <input
                 type="password"
                 name="password"
                 autoComplete="current-password"
-                id="password"
                 required
-                placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
+                placeholder="••••••••"
+                className="w-full px-4 py-2.5 text-sm transition-all border border-gray-200 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-100 dark:placeholder-gray-500"
               />
+              {/* Forgot Password Link */}
+              <div className="mt-1 text-right">
+                <button type="button" className="text-[10px] font-bold hover:underline hover:text-emerald-600 text-gray-400 cursor-pointer uppercase tracking-tighter dark:hover:text-emerald-400">
+                  Forgot password?
+                </button>
+              </div>
             </div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              className="bg-lime-500 w-full rounded-md py-3 text-white"
-            >
-              {loading ? (
-                <TbFidgetSpinner className="animate-spin m-auto" />
-              ) : (
-                "Continue"
-              )}
-            </button>
-          </div>
-        </form>
-        <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-lime-500 text-gray-400 cursor-pointer">
-            Forgot password?
-          </button>
-        </div>
-        <div className="flex items-center pt-4 space-x-1">
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-          <p className="px-3 text-sm dark:text-gray-400">
-            Login with social accounts
-          </p>
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-        </div>
-        <div
-          onClick={handleGoogleSignIn}
-          className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer"
-        >
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </div>
-        <p className="px-6 text-sm text-center text-gray-400">
-          Don&apos;t have an account yet?{" "}
-          <Link
-            state={from}
-            to="/signup"
-            className="hover:underline hover:text-lime-500 text-gray-600"
+          {/* Login Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3.5 text-xs font-black text-white uppercase tracking-[0.2em] rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg shadow-emerald-200/50 hover:shadow-emerald-500/40 transition-all active:scale-95 disabled:opacity-70 cursor-pointer border-none mt-2"
           >
-            Sign up
+            {loading ? <TbFidgetSpinner className="m-auto text-lg animate-spin" /> : "Sign In"}
+          </button>
+        </form>
+
+        {/* Social Login Divider */}
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-gray-100 dark:bg-slate-800"></div>
+          <p className="px-3 text-[9px] font-black uppercase text-gray-300  dark:text-gray-600">Or social login</p>
+          <div className="flex-1 h-px bg-gray-100 dark:bg-slate-800"></div>
+        </div>
+
+        {/* Google Login Button */}
+        <button
+          onClick={handleGoogleSignIn}
+          className="flex items-center justify-center w-full py-2.5 space-x-3 text-xs font-bold text-gray-700 transition-all border border-gray-200 shadow-sm rounded-xl hover:bg-gray-50 active:scale-95 dark:border-slate-700 dark:text-gray-300 dark:hover:bg-slate-800"
+        >
+          <FcGoogle size={22} />
+          <span>Continue with Google</span>
+        </button>
+
+        {/* Footer Link */}
+        <p className="mt-8 text-[10px] font-bold  text-center text-gray-400 uppercase">
+          New to TicketBari?{" "}
+          <Link to="/signup" className="text-emerald-600 hover:underline hover:text-green-700 dark:text-emerald-400 decoration-2">
+            Sign Up Now
           </Link>
-          .
         </p>
       </div>
     </div>

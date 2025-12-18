@@ -64,25 +64,25 @@ export default function VendorBookings() {
   return (
     <div className="p-5">
       <Toaster position="top-right" />
-      <h2 className="text-3xl font-bold text-center text-green-700 mb-6">
+      <h2 className="mb-6 text-3xl font-bold text-center text-green-700">
         Requested Bookings
       </h2>
 
-      <div className="overflow-x-auto shadow-lg rounded-lg">
+      <div className="overflow-x-auto rounded-lg shadow-lg">
         <table className="table w-full">
           <thead>
-            <tr className="bg-gray-100 text-left uppercase text-gray-600">
-              <th className="py-3 px-4">User Email</th>
-              <th className="py-3 px-4">Ticket Title</th>
-              <th className="py-3 px-4">Quantity</th>
-              <th className="py-3 px-4">Total Price</th>
-              <th className="py-3 px-4">Actions</th>
+            <tr className="text-left text-gray-600 uppercase bg-green-100/80">
+              <th className="px-4 py-3">User Email</th>
+              <th className="px-4 py-3">Ticket Title</th>
+              <th className="px-4 py-3">Quantity</th>
+              <th className="px-4 py-3">Total Price</th>
+              <th className="px-4 py-3">Actions</th>
             </tr>
           </thead>
           <tbody>
             {bookings.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-6 text-gray-500">
+                <td colSpan={5} className="py-6 text-center text-gray-500">
                   No pending booking requests
                 </td>
               </tr>
@@ -90,24 +90,24 @@ export default function VendorBookings() {
               bookings.map((b) => (
                 <tr
                   key={b._id}
-                  className="hover:bg-green-50 transition-colors duration-200"
+                  className="transition-colors duration-200 hover:bg-green-50"
                 >
-                  <td className="py-3 px-4">{b.userEmail}</td>
-                  <td className="py-3 px-4 font-medium">{b.ticketTitle}</td>
-                  <td className="py-3 px-4">{b.quantity}</td>
-                  <td className="py-3 px-4 font-semibold text-green-600">
+                  <td className="px-4 py-3">{b.userEmail}</td>
+                  <td className="px-4 py-3 font-medium">{b.ticketTitle}</td>
+                  <td className="px-4 py-3">{b.quantity}</td>
+                  <td className="px-4 py-3 font-semibold text-green-600">
                     ${b.ticketUnitPrice * b.quantity}
                   </td>
-                  <td className="py-3 px-4 flex gap-2">
+                  <td className="flex gap-2 px-4 py-3">
                     <button
                       onClick={() => handleAccept(b._id)}
-                      className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200"
+                      className="flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
                     >
                       <FaCheck /> Accept
                     </button>
                     <button
                       onClick={() => handleReject(b._id)}
-                      className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-red-500 to-rose-500 text-white rounded-lg hover:from-red-600 hover:to-rose-600 transition-all duration-200"
+                      className="flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600"
                     >
                       <FaTimes /> Reject
                     </button>
