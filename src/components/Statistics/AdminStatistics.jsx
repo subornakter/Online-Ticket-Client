@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { FaUser, FaTicketAlt, FaMoneyBillWave } from "react-icons/fa";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
+import LoadingSpinner from "../LoadingSpinner";
 
 const AdminStatistics = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,9 +15,9 @@ const AdminStatistics = () => {
       .catch((err) => console.log(err));
   }, [axiosSecure]);
 
-  if (!stats) return <div className="mt-20 text-2xl font-bold text-center">Loading Stats...</div>;
+  if (!stats) return <LoadingSpinner/>;
 
-  // ইউজার রোলের জন্য ডাটা (Pie Chart)
+
   const roleData = [
     { name: "Customers", value: stats.customerCount || 0 },
     { name: "Vendors", value: stats.vendorCount || 0 },
@@ -24,7 +25,7 @@ const AdminStatistics = () => {
     { name: "Fraud", value: stats.fraudCount || 0 },
   ];
 
-  // টিকিট স্ট্যাটাসের জন্য ডাটা (Bar Chart)
+
   const ticketStatusData = [
     { name: "Approved", count: stats.approvedTickets || 0 },
     { name: "Pending", count: stats.pendingTickets || 0 },
@@ -73,7 +74,7 @@ const AdminStatistics = () => {
         </div>
       </div>
 
-      {/* গ্রাফ সেকশন */}
+     
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         
         {/* User Role Distribution Pie Chart */}

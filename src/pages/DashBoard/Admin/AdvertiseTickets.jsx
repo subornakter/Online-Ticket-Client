@@ -27,7 +27,7 @@ export default function AdvertiseTickets() {
   if (isLoading)
     return (
       <div className="flex justify-center py-20">
-        <span className="loading loading-spinner loading-lg text-blue-500"></span>
+        <span className="text-blue-500 loading loading-spinner loading-lg"></span>
       </div>
     );
 
@@ -38,13 +38,13 @@ export default function AdvertiseTickets() {
       transition={{ duration: 0.4 }}
       className="p-6"
     >
-      <h2 className="text-2xl font-bold mb-6 text-center">
+      <h2 className="mb-6 text-2xl font-bold text-center">
         Manage Advertised Tickets
       </h2>
 
-      <div className="overflow-x-auto bg-base-100 shadow-lg rounded-lg">
+      <div className="overflow-x-auto rounded-lg shadow-xl bg-base-100">
         <table className="table w-full">
-          <thead className="bg-gray-200 text-gray-700">
+          <thead className="text-gray-700 bg-gray-100">
             <tr>
               <th>#</th>
               <th>Image</th>
@@ -52,8 +52,8 @@ export default function AdvertiseTickets() {
               <th>Price</th>
               <th>Quantity</th>
               <th>Seller</th>
-              <th>Status</th>
-              <th>Advertise</th>
+              <th className="w-32 text-center">Status</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
 
@@ -64,7 +64,7 @@ export default function AdvertiseTickets() {
                 initial={{ opacity: 0, x: -15 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="border-b"
+                className="transition border-b hover:bg-gray-50"
               >
                 <td>{index + 1}</td>
 
@@ -72,36 +72,38 @@ export default function AdvertiseTickets() {
                   <img
                     src={t.image}
                     alt={t.title}
-                    className="h-14 w-20 rounded object-cover shadow"
+                    className="object-cover w-20 rounded-md shadow h-14"
                   />
                 </td>
 
                 <td className="font-semibold">{t.title}</td>
 
-                <td className="text-blue-600 font-bold">${t.price}</td>
+                <td className="font-bold text-blue-600">${t.price}</td>
 
                 <td>{t.ticket_quantity}</td>
 
-                <td className="text-sm">{t.seller?.email}</td>
+                <td className="text-sm text-gray-600">
+                  {t.seller?.email}
+                </td>
 
-                <td>
+                <td className="text-center">
                   <span
-                    className={`px-2 py-1 rounded text-white text-xs ${
-                      t.advertise ? "bg-green-600" : "bg-gray-500"
+                    className={`px-3 py-1 rounded-full text-white text-xs font-semibold whitespace-nowrap inline-flex items-center justify-center ${
+                      t.advertise ? "bg-green-600" : "bg-gray-600"
                     }`}
                   >
                     {t.advertise ? "Advertised" : "Not Advertised"}
                   </span>
                 </td>
 
-                <td>
+                <td className="text-center">
                   <button
                     onClick={() => handleAdvertise(t)}
-                    className={`px-3 py-1 rounded text-white font-medium ${
+                    className={`px-4 py-1.5 rounded-lg text-white font-medium shadow transition ${
                       t.advertise
                         ? "bg-red-500 hover:bg-red-600"
                         : "bg-blue-500 hover:bg-blue-600"
-                    } transition`}
+                    }`}
                   >
                     {t.advertise ? "Unadvertise" : "Advertise"}
                   </button>
