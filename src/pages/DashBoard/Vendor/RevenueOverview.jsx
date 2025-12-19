@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { motion } from "framer-motion";
+import { Doughnut } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 import { FaDollarSign, FaTicketAlt, FaPlusCircle } from "react-icons/fa";
-
-const COLORS = ["#4ade80", "#60a5fa", "#f472b6"]; // green, blue, pink
+import { motion } from "framer-motion";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 const RevenueOverview = () => {
   const { user } = useAuth();
@@ -21,6 +14,7 @@ const RevenueOverview = () => {
     totalTicketsSold: 0,
     totalTicketsAdded: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,82 +25,107 @@ const RevenueOverview = () => {
             `${import.meta.env.VITE_API_URL}/vendor/revenue-overview`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
-          setData(res.data);
+
+          // ensure numeric values
+          setData({
+            totalRevenue: Number(res.data.totalRevenue),
+            totalTicketsSold: Number(res.data.totalTicketsSold),
+            totalTicketsAdded: Number(res.data.totalTicketsAdded),
+          });
         } catch (err) {
           console.error("Failed to fetch revenue overview:", err);
+        } finally {
+          setLoading(false);
         }
       }
     };
     fetchData();
   }, [user]);
 
-  const pieData = [
-    { name: "Tickets Added", value: data.totalTicketsAdded },
-    { name: "Tickets Sold", value: data.totalTicketsSold },
-    { name: "Revenue ($)", value: data.totalRevenue },
-  ];
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-64">
+        <LoadingSpinner />
+      </div>
+    );
+
+  const chartData = {
+    labels: ["Revenue ($)", "Tickets Added", "Tickets Sold"],
+    datasets: [
+      {
+        data: [
+          data.totalRevenue,
+          data.totalTicketsAdded,
+          data.totalTicketsSold,
+        ],
+        backgroundColor: ["#f472b6", "#4ade80", "#60a5fa"],
+        borderWidth: 0,
+        cutout: "70%",
+      },
+    ],
+  };
+
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          usePointStyle: true,
+          pointStyle: "circle",
+          padding: 20,
+          font: { size: 14 },
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const label = context.label || "";
+            const value = context.raw || 0;
+            return `${label}: ${value}`;
+          },
+        },
+      },
+    },
+    animation: {
+      animateRotate: true,
+      animateScale: true,
+    },
+    maintainAspectRatio: false,
+  };
 
   return (
     <motion.div
-      className="p-6 bg-white shadow-lg dark:bg-gray-800 rounded-xl"
+      className="p-6 bg-base-100 shadow-lg rounded-xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="mb-6 text-2xl font-bold text-center text-gray-800 dark:text-gray-100">
+      <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">
         Revenue Overview
       </h2>
 
-      {/* Chart */}
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
-            data={pieData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            fill="#8884d8"
-            label={({ name, percent }) =>
-              `${name}: ${(percent * 100).toFixed(0)}%`
-            }
-            labelLine={true}
-            isAnimationActive={true}
-          >
-            {pieData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-          <Tooltip
-            formatter={(value) =>
-              typeof value === "number" ? value.toLocaleString() : value
-            }
-            contentStyle={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
-          />
-          <Legend verticalAlign="bottom" height={36} />
-        </PieChart>
-      </ResponsiveContainer>
+      <div className="w-full h-72 md:h-96">
+        <Doughnut data={chartData} options={chartOptions} />
+      </div>
 
       {/* Metric Cards */}
       <div className="flex flex-col flex-wrap justify-center gap-4 mt-8 md:flex-row">
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-green-400 to-green-600 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-green-500 rounded-xl min-w-[250px] flex-1"
         >
           <FaDollarSign className="text-3xl" />
           <div>
             <h3 className="text-lg font-semibold">Total Revenue</h3>
-            <p className="text-xl font-bold">${data.totalRevenue.toLocaleString()}</p>
+            <p className="text-xl font-bold">
+              ${data.totalRevenue.toLocaleString()}
+            </p>
           </div>
         </motion.div>
 
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-blue-500 rounded-xl min-w-[250px] flex-1"
         >
           <FaTicketAlt className="text-3xl" />
           <div>
@@ -117,7 +136,7 @@ const RevenueOverview = () => {
 
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-gradient-to-r from-pink-400 to-pink-600 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-pink-500 rounded-xl min-w-[250px] flex-1"
         >
           <FaPlusCircle className="text-3xl" />
           <div>
@@ -131,4 +150,3 @@ const RevenueOverview = () => {
 };
 
 export default RevenueOverview;
-

@@ -3,7 +3,12 @@ import axios from "axios";
 import TicketCard from "../components/TicketCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
-import { FaSearch, FaMapMarkerAlt, FaCalendarAlt,FaFilter } from "react-icons/fa";
+import {
+  FaSearch,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaFilter,
+} from "react-icons/fa";
 
 const AllTickets = () => {
   const [tickets, setTickets] = useState([]);
@@ -16,21 +21,27 @@ const AllTickets = () => {
   const [searchDate, setSearchDate] = useState("");
 
   // Sorting
-  const [sortOrder, setSortOrder] = useState("none"); // none / asc / desc
+  const [sortOrder, setSortOrder] = useState("none");
+
+  // ✅ Transport Filter
+  const [transportType, setTransportType] = useState("all");
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const ticketsPerPage = 6;
 
-  // Load ALL tickets initially
+  // Load ALL tickets
   useEffect(() => {
     const fetchTickets = async () => {
       if (!user) return;
       try {
         const token = await user.getIdToken();
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/tickets`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/tickets`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setTickets(res.data);
       } catch (err) {
         console.log(err);
@@ -41,13 +52,13 @@ const AllTickets = () => {
     fetchTickets();
   }, [user]);
 
-  // SEARCH FUNCTION
+  // SEARCH
   const handleSearch = async () => {
     if (!user) return;
     try {
       setLoading(true);
-
       const token = await user.getIdToken();
+
       const queryParams = new URLSearchParams({
         from: searchFrom,
         to: searchTo,
@@ -64,20 +75,28 @@ const AllTickets = () => {
       setTickets(res.data);
       setCurrentPage(1);
     } catch (err) {
-      console.log("Search error:", err);
+      console.log(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // SORT FUNCTION
-  const sortedTickets = [...tickets].sort((a, b) => {
+  // ✅ FILTER BY TRANSPORT
+  const filteredTickets =
+    transportType === "all"
+      ? tickets
+      : tickets.filter(
+          (t) => t.transport_type === transportType
+        );
+
+  // SORT
+  const sortedTickets = [...filteredTickets].sort((a, b) => {
     if (sortOrder === "asc") return a.price - b.price;
     if (sortOrder === "desc") return b.price - a.price;
     return 0;
   });
 
-  // PAGINATION CALCULATION
+  // PAGINATION
   const indexOfLastTicket = currentPage * ticketsPerPage;
   const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
   const currentTickets = sortedTickets.slice(
@@ -90,12 +109,12 @@ const AllTickets = () => {
 
   return (
     <div className="p-5">
-      {/* PAGE TITLE */}
+      {/* TITLE */}
       <h1 className="mb-6 text-3xl font-bold text-center text-transparent md:text-4xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text">
         Explore All Tickets
       </h1>
 
-      {/* 🔍 SEARCH + SORT BAR */}
+      {/* SEARCH + FILTER BAR */}
       <div className="p-4 mb-6 shadow-lg bg-base-100 rounded-xl">
         <div className="flex flex-col items-center gap-4 lg:flex-row">
           {/* From */}
@@ -133,24 +152,40 @@ const AllTickets = () => {
             />
           </div>
 
-          {/* SEARCH BUTTON with gradient */}
+          {/* Search */}
           <button
             onClick={handleSearch}
-            className="flex items-center justify-center w-full gap-2 px-6 py-3 text-white transition rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 lg:w-auto"
+            className="flex items-center justify-center w-full gap-2 px-6 py-3 text-white rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 lg:w-auto"
           >
-            <FaSearch />
-            Search
+            <FaSearch /> Search
           </button>
         </div>
 
-        {/* SORT DROPDOWN */}
-        <div className="flex justify-end mt-4">
+        {/* SORT + FILTER */}
+        <div className="flex flex-wrap items-center justify-end gap-3 mt-4">
+          {/* Transport Filter */}
+          <select
+            value={transportType}
+            onChange={(e) => {
+              setTransportType(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="px-3 py-2 border border-green-400 rounded-lg outline-none"
+          >
+            <option value="all">All Transport</option>
+            <option value="bus">Bus</option>
+            <option value="train">Train</option>
+            <option value="launch">Launch</option>
+            <option value="plane">Plane</option>
+          </select>
+
+          {/* Sort */}
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
             className="px-3 py-2 border border-green-400 rounded-lg outline-none"
           >
-            <option value="none"><FaFilter className="text-green-600" />Sort by Price</option>
+            <option value="none">Sort by Price</option>
             <option value="asc">Low to High</option>
             <option value="desc">High to Low</option>
           </select>
@@ -193,3 +228,4 @@ const AllTickets = () => {
 };
 
 export default AllTickets;
+

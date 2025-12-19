@@ -44,7 +44,7 @@ export default function AdvertisementSection() {
 
   return (
     <div className="px-4 my-12">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto bg-base-100 max-w-7xl">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

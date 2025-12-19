@@ -3,7 +3,7 @@ import { FaTicketAlt, FaRoute, FaSmileBeam } from "react-icons/fa";
 
 export default function TravelOptionsSection() {
   return (
-    <div className="max-w-7xl bg-base-100 mx-auto py-16 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className="grid grid-cols-1 gap-10 p-5 py-16 mx-auto rounded-xl max-w-7xl bg-base-100 md:grid-cols-2">
       
       {/* LEFT SIDE TEXT */}
       <motion.div
@@ -13,24 +13,24 @@ export default function TravelOptionsSection() {
         viewport={{ once: true }}
         className="flex flex-col justify-center"
       >
-        <h1 className="text-4xl md:text-5xl font-bold leading-snug">
+        <h1 className="text-4xl font-bold leading-snug md:text-5xl">
           All your <span className="text-green-600">travel options</span> in one place
         </h1>
 
-        <p className="mt-5 text-gray-600 text-lg">
+        <p className="mt-5 text-lg text-gray-600">
           More than 1,000 trusted travel partners across trains, buses,
           flights, and launch — so that you can focus on the journey.
         </p>
 
         {/* STATS */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10">
+        <div className="grid grid-cols-1 gap-6 mt-10 sm:grid-cols-3">
 
           {/* 1 */}
           <motion.div
             whileHover={{ scale: 1.1 }}
             className="text-center"
           >
-            <FaTicketAlt className="text-green-600 text-4xl mx-auto mb-2" />
+            <FaTicketAlt className="mx-auto mb-2 text-4xl text-green-600" />
             <h2 className="text-2xl font-bold text-green-600">250 Million+</h2>
             <p className="text-gray-500">Tickets Sold</p>
           </motion.div>
@@ -40,7 +40,7 @@ export default function TravelOptionsSection() {
             whileHover={{ scale: 1.1 }}
             className="text-center"
           >
-            <FaRoute className="text-blue-600 text-4xl mx-auto mb-2" />
+            <FaRoute className="mx-auto mb-2 text-4xl text-blue-600" />
             <h2 className="text-2xl font-bold text-blue-600">3000+</h2>
             <p className="text-gray-500">Routes</p>
           </motion.div>
@@ -50,7 +50,7 @@ export default function TravelOptionsSection() {
             whileHover={{ scale: 1.1 }}
             className="text-center"
           >
-            <FaSmileBeam className="text-yellow-500 text-4xl mx-auto mb-2" />
+            <FaSmileBeam className="mx-auto mb-2 text-4xl text-yellow-500" />
             <h2 className="text-2xl font-bold text-yellow-500">10 Million+</h2>
             <p className="text-gray-500">Happy Users</p>
           </motion.div>

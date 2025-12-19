@@ -29,6 +29,7 @@ import AboutUs from '../pages/AboutUs'
 import VendorRoute from './VendorRoute'
 import AdminRoute from './AdminRoute'
 import Statistics from '../pages/DashBoard/Common/Statistics.jsx'
+import CustomerRoute from './CustomerRoute.jsx'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -83,7 +84,7 @@ export const router = createBrowserRouter([
         path: 'bookings',
         element: (
           <PrivateRoute>
-            <MyBooking/>
+            <CustomerRoute><MyBooking/></CustomerRoute>
           </PrivateRoute>
         ),
       },

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { motion } from "framer-motion";
-
+import LoadingSpinner from "../../../components/LoadingSpinner";
 export default function AdvertiseTickets() {
   const axiosSecure = useAxiosSecure();
 
@@ -27,7 +27,7 @@ export default function AdvertiseTickets() {
   if (isLoading)
     return (
       <div className="flex justify-center py-20">
-        <span className="text-blue-500 loading loading-spinner loading-lg"></span>
+        <LoadingSpinner />
       </div>
     );
 

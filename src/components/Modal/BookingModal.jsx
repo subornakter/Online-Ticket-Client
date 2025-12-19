@@ -39,7 +39,7 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
       // UI Update (Reduce quantity)
       setTicket({
         ...ticket,
-        ticket_quantity: ticket.ticket_quantity - quantity,
+        // ticket_quantity: ticket.ticket_quantity - quantity,
       });
 
       toast.success("Booking Successful!");
@@ -51,14 +51,14 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-base-100 p-6 rounded-lg w-96 shadow-lg">
-        <h2 className="font-bold text-xl mb-4">Book Ticket</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+      <div className="p-6 rounded-lg shadow-lg bg-base-100 w-96">
+        <h2 className="mb-4 text-xl font-bold">Book Ticket</h2>
 
         <label className="font-semibold">Quantity:</label>
         <input
           type="number"
-          className="input input-bordered w-full mt-2"
+          className="w-full mt-2 input input-bordered"
           min="1"
           max={ticket.ticket_quantity}
           value={quantity}
@@ -71,13 +71,13 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
 
         <button
           onClick={handleBooking}
-          className="btn btn-success w-full mt-4"
+          className="w-full mt-4 btn btn-success"
           disabled={ticket.ticket_quantity === 0}
         >
           Confirm Booking
         </button>
 
-        <button onClick={closeModal} className="btn btn-outline w-full mt-2">
+        <button onClick={closeModal} className="w-full mt-2 btn btn-outline">
           Cancel
         </button>
       </div>

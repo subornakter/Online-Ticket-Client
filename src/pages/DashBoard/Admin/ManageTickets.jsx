@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 export default function ManageTickets() {
   const axiosSecure = useAxiosSecure();
@@ -15,9 +16,9 @@ export default function ManageTickets() {
     },
   });
 
-  if (isLoading) return <p className="text-center">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
 
-  // ✅ Approve ticket (update status locally)
+  // Approve ticket (update status locally)
   const handleApprove = async (id) => {
     try {
       await axiosSecure.patch(`/admin/ticket/approve/${id}`);
@@ -37,7 +38,7 @@ export default function ManageTickets() {
     }
   };
 
-  // ❌ Reject ticket (update status locally)
+
   const handleReject = async (id) => {
     try {
       await axiosSecure.patch(`/admin/ticket/reject/${id}`);

@@ -1,15 +1,17 @@
-// VendorBookings.jsx
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 import { FaCheck, FaTimes } from "react-icons/fa";
-
+import LoadingSpinner from "../../../components/LoadingSpinner";
 export default function VendorBookings() {
   const { user } = useAuth();
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false); // <-- loading state
+  const [actionLoading, setActionLoading] = useState(""); // id of booking being acted on
 
   const fetchBookings = async () => {
     if (!user?.email) return;
+    setLoading(true); // start loading
     try {
       const token = await user.getIdToken();
       const res = await fetch(
@@ -22,6 +24,8 @@ export default function VendorBookings() {
     } catch (err) {
       console.log(err);
       toast.error("Failed to load requested bookings!");
+    } finally {
+      setLoading(false); // stop loading
     }
   };
 
@@ -30,6 +34,7 @@ export default function VendorBookings() {
   }, [user]);
 
   const handleAccept = async (id) => {
+    setActionLoading(id); // mark this booking as loading
     try {
       const token = await user.getIdToken();
       const res = await fetch(
@@ -42,10 +47,13 @@ export default function VendorBookings() {
     } catch (err) {
       console.log(err);
       toast.error("Failed to accept booking");
+    } finally {
+      setActionLoading(""); // reset action loading
     }
   };
 
   const handleReject = async (id) => {
+    setActionLoading(id); // mark this booking as loading
     try {
       const token = await user.getIdToken();
       const res = await fetch(
@@ -58,6 +66,8 @@ export default function VendorBookings() {
     } catch (err) {
       console.log(err);
       toast.error("Failed to reject booking");
+    } finally {
+      setActionLoading(""); // reset action loading
     }
   };
 
@@ -80,7 +90,13 @@ export default function VendorBookings() {
             </tr>
           </thead>
           <tbody>
-            {bookings.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan={5} className="py-6 text-center text-gray-500">
+                <LoadingSpinner />
+                </td>
+              </tr>
+            ) : bookings.length === 0 ? (
               <tr>
                 <td colSpan={5} className="py-6 text-center text-gray-500">
                   No pending booking requests
@@ -101,15 +117,21 @@ export default function VendorBookings() {
                   <td className="flex gap-2 px-4 py-3">
                     <button
                       onClick={() => handleAccept(b._id)}
-                      className="flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                      disabled={actionLoading === b._id}
+                      className={`flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 ${
+                        actionLoading === b._id ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                     >
-                      <FaCheck /> Accept
+                      <FaCheck /> {actionLoading === b._id ? "Processing..." : "Accept"}
                     </button>
                     <button
                       onClick={() => handleReject(b._id)}
-                      className="flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600"
+                      disabled={actionLoading === b._id}
+                      className={`flex items-center gap-1 px-3 py-1 text-white transition-all duration-200 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 ${
+                        actionLoading === b._id ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                     >
-                      <FaTimes /> Reject
+                      <FaTimes /> {actionLoading === b._id ? "Processing..." : "Reject"}
                     </button>
                   </td>
                 </tr>

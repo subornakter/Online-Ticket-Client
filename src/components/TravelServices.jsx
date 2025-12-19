@@ -23,11 +23,11 @@ const services = [
     desc: "Find launch/ship tickets & book your journey hassle-free.",
   },
 ];
-
+//bg-[#F4F8F6]
 export default function TravelServices() {
   return (
-    <div className="py-16 bg-[#F4F8F6]">
-      <div className="max-w-6xl mx-auto px-4 text-center">
+    <div className="py-16 bg-base-100">
+      <div className="max-w-6xl px-4 mx-auto text-center">
         {/* Top Heading */}
         <motion.p
           initial={{ opacity: 0, y: -10 }}
@@ -42,13 +42,13 @@ export default function TravelServices() {
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl font-bold text-green-800 my-4"
+          className="my-4 text-4xl font-bold text-green-800"
         >
           Introducing you to a Smart Travel Experience
         </motion.h2>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-1 gap-8 mt-12 md:grid-cols-2 lg:grid-cols-4">
           {services.map((item, index) => (
             <motion.div
               key={index}
@@ -56,13 +56,13 @@ export default function TravelServices() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: index * 0.15 }}
               whileHover={{ scale: 1.04, y: -4 }}
-              className="bg-base-100 rounded-2xl shadow-md p-6 cursor-pointer hover:shadow-xl transition"
+              className="p-6 transition shadow-md cursor-pointer bg-base-100 rounded-2xl hover:shadow-xl"
             >
               <div className="flex justify-center">{item.icon}</div>
-              <h3 className="text-xl font-semibold mt-4 text-green-700">
+              <h3 className="mt-4 text-xl font-semibold text-green-700">
                 {item.title}
               </h3>
-              <p className="text-gray-600 mt-2 text-sm">{item.desc}</p>
+              <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
             </motion.div>
           ))}
         </div>
