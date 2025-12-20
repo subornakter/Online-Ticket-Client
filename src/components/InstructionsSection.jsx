@@ -12,7 +12,7 @@ export default function InstructionsSection() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div className="grid items-center grid-cols-1 gap-12 px-6 py-16 mx-auto max-w-7xl md:grid-cols-2">
 
       {/* Left Image */}
       <motion.div
@@ -36,7 +36,7 @@ export default function InstructionsSection() {
         transition={{ duration: 0.7 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-3xl font-bold mb-6 text-green-800">
+        <h2 className="mb-6 text-3xl font-bold text-green-600">
           Instructions to Purchase Tickets
         </h2>
 
@@ -51,7 +51,7 @@ export default function InstructionsSection() {
               className="flex items-start gap-3"
             >
               <FiCheckCircle className="text-green-600 text-2xl mt-0.5" />
-              <p className="text-gray-700 leading-relaxed">{item}</p>
+              <p className="leading-relaxed text-gray-700">{item}</p>
             </motion.li>
           ))}
         </ul>

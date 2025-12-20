@@ -26,7 +26,6 @@ const RevenueOverview = () => {
             { headers: { Authorization: `Bearer ${token}` } }
           );
 
-          // ensure numeric values
           setData({
             totalRevenue: Number(res.data.totalRevenue),
             totalTicketsSold: Number(res.data.totalTicketsSold),
@@ -53,11 +52,7 @@ const RevenueOverview = () => {
     labels: ["Revenue ($)", "Tickets Added", "Tickets Sold"],
     datasets: [
       {
-        data: [
-          data.totalRevenue,
-          data.totalTicketsAdded,
-          data.totalTicketsSold,
-        ],
+        data: [data.totalRevenue, data.totalTicketsAdded, data.totalTicketsSold],
         backgroundColor: ["#f472b6", "#4ade80", "#60a5fa"],
         borderWidth: 0,
         cutout: "70%",
@@ -95,7 +90,7 @@ const RevenueOverview = () => {
 
   return (
     <motion.div
-      className="p-6 bg-base-100 shadow-lg rounded-xl"
+      className="p-6 shadow-lg bg-base-100 rounded-xl"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -104,7 +99,8 @@ const RevenueOverview = () => {
         Revenue Overview
       </h2>
 
-      <div className="w-full h-72 md:h-96">
+      {/* Chart Container */}
+      <div className="w-full h-64 sm:h-72 md:h-96">
         <Doughnut data={chartData} options={chartOptions} />
       </div>
 
@@ -112,7 +108,7 @@ const RevenueOverview = () => {
       <div className="flex flex-col flex-wrap justify-center gap-4 mt-8 md:flex-row">
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-green-500 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-green-500 rounded-xl min-w-[200px] flex-1"
         >
           <FaDollarSign className="text-3xl" />
           <div>
@@ -125,7 +121,7 @@ const RevenueOverview = () => {
 
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-blue-500 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-blue-500 rounded-xl min-w-[200px] flex-1"
         >
           <FaTicketAlt className="text-3xl" />
           <div>
@@ -136,7 +132,7 @@ const RevenueOverview = () => {
 
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-3 p-5 text-white shadow-md bg-pink-500 rounded-xl min-w-[250px] flex-1"
+          className="flex items-center gap-3 p-5 text-white shadow-md bg-pink-500 rounded-xl min-w-[200px] flex-1"
         >
           <FaPlusCircle className="text-3xl" />
           <div>

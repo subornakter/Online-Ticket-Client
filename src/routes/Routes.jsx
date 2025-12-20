@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         path: '/payment-success',
         element: <PaymentSuccess/>,
       },
-     { path: '/all-tickets', element: <PrivateRoute><AllTickets/></PrivateRoute> },
+     { path: '/all-tickets', element: <AllTickets/> },
          
       { path: '/contact', element: <Contact/> },
           { path: '/about', element: <AboutUs/> },
