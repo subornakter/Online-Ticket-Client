@@ -99,7 +99,7 @@ The goal of TicketBari is to provide a seamless and intuitive platform for trave
 
 ```bash
 git clone https://github.com/subornakter/Online-Ticket-Client
-git clone https://github.com/subornakter/Online-Ticket-Client
+git clone https://github.com/subornakter/Online-Ticket-System-Server
 ```
 ## Install dependencies:
 ```bash
