@@ -1,6 +1,6 @@
 # TicketBari
 
-**Live URL:** [https://phenomenal-custard-25a583.netlify.app/](#)
+**Live URL:** [Online Ticket Booking Platform](https://phenomenal-custard-25a583.netlify.app/)
 
 ---
 
