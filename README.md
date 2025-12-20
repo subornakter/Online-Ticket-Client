@@ -107,7 +107,7 @@ npm install
 ```
 ## Set up environment variables:
 ```bash
-VITE_API_URL=<your_backend_url>
+VITE_API_URL= https://online-ticket-system-server.vercel.app
 ```
 ## Run the development server:
 ```bash
