@@ -1,6 +1,6 @@
 # TicketBari
 
-**Live URL:** [Your Live Project URL Here](#)
+**Live URL:** [https://phenomenal-custard-25a583.netlify.app](#)
 
 ---
 
