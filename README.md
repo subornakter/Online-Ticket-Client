@@ -100,3 +100,17 @@ The goal of TicketBari is to provide a seamless and intuitive platform for trave
 ```bash
 git clone https://github.com/subornakter/Online-Ticket-Client
 git clone https://github.com/subornakter/Online-Ticket-Client
+```
+## Install dependencies:
+```bash
+npm install
+```
+## Set up environment variables:
+```bash
+VITE_API_URL=<your_backend_url>
+```
+## Run the development server:
+```bash
+npm run dev
+```
+
