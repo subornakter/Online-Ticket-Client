@@ -1,16 +1,116 @@
-# React + Vite
+# TicketBari
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live URL:** [Your Live Project URL Here](#)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Purpose
 
-## React Compiler
+TicketBari is a complete **Online Ticket Booking Platform** developed using the **MERN stack**. The platform allows users to discover and book travel tickets for various modes of transportation including **Bus, Train, Launch, and Plane**. It supports **three user roles**:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **User:** Browse and book tickets.  
+- **Vendor:** Add, manage, and advertise tickets for sale.  
+- **Admin:** Approve or reject tickets, manage users, and oversee advertised tickets.
 
-## Expanding the ESLint configuration
+The goal of TicketBari is to provide a seamless and intuitive platform for travel ticket booking and management.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Key Features
+
+- **User Features:**
+  - Browse and search tickets by travel type and destination.
+  - Book tickets online securely.
+  - View booking history and ticket details.
+
+- **Vendor Features:**
+  - Add new tickets with details like price, quantity, and travel type.
+  - Manage existing tickets.
+  - Advertise tickets to highlight them for users.
+  - View sales and revenue statistics.
+
+- **Admin Features:**
+  - Approve or reject tickets submitted by vendors.
+  - Manage advertised tickets.
+  - Monitor user and vendor activity.
+
+- **Additional Features:**
+  - Real-time ticket updates with React Query.
+  - Dynamic charts for revenue and ticket sales.
+  - Mobile responsive design with card layouts for smaller screens.
+  - Smooth animations and interactive UI using Framer Motion and GSAP.
+  - Integrated maps using Leaflet for travel routes.
+  - Notifications using React Hot Toast and SweetAlert2.
+  - Countdown timers for upcoming trips using React Countdown.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React, TailwindCSS, DaisyUI, Framer Motion, React Router  
+- **Backend:** Node.js, Express.js, MongoDB, Firebase Authentication  
+- **State Management:** React Query  
+- **Charts & Data Visualization:** Chart.js, React-Chartjs-2, Recharts  
+- **Maps:** Leaflet, React-Leaflet, Leaflet-Geosearch  
+
+---
+
+## NPM Packages Used
+
+- `@headlessui/react`  
+- `@heroicons/react`  
+- `@tanstack/react-query`  
+- `@tailwindcss/vite`  
+- `axios`  
+- `canvas-confetti`  
+- `chart.js`  
+- `daisyui`  
+- `firebase`  
+- `framer-motion`  
+- `gsap`  
+- `heroicons`  
+- `leaflet`  
+- `leaflet-geosearch`  
+- `moment`  
+- `react`  
+- `react-chartjs-2`  
+- `react-countdown`  
+- `react-dom`  
+- `react-hook-form`  
+- `react-hot-toast`  
+- `react-icons`  
+- `react-leaflet`  
+- `react-router`  
+- `react-simple-typewriter`  
+- `react-slick`  
+- `react-spinners`  
+- `recharts`  
+- `slick-carousel`  
+- `sweetalert2`  
+- `swiper`  
+- `tailwindcss`  
+- `typewriter-effect`  
+
+---
+
+## Installation & Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/subornakter/Online-Ticket-Client
+git clone https://github.com/subornakter/Online-Ticket-System-Server
+```
+## Install dependencies:
+```bash
+npm install
+```
+## Set up environment variables:
+```bash
+VITE_API_URL= https://online-ticket-system-server.vercel.app
+```
+## Run the development server:
+```bash
+npm run dev
+```
+
