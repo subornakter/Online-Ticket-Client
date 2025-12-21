@@ -29,7 +29,7 @@ const AddTicketForm = () => {
     mutationFn: async (payload) => {
       const token = await user?.getIdToken();
       return await axios.post(
-        `${import.meta.env.VITE_API_URL}/tickets`,
+        `https://online-ticket-system-server.vercel.app/tickets`,
         payload,
         {
           headers: {

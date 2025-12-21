@@ -19,7 +19,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
 
   if (loading) return <LoadingSpinner />;
-  if (user) return <Navigate to={from} replace={true} />;
+  // if (user) return <Navigate to={from} replace={true} />;
 
   const handleSubmit = async (event) => {
     event.preventDefault();

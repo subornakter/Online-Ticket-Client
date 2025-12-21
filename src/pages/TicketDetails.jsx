@@ -46,7 +46,7 @@ const TicketDetails = () => {
       try {
         const token = await user?.getIdToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/ticket/${id}`,
+          `https://online-ticket-system-server.vercel.app/ticket/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setTicket(res.data);
@@ -82,38 +82,38 @@ const TicketDetails = () => {
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-6xl mx-auto px-4 py-12"
+      className="max-w-6xl px-4 py-12 mx-auto"
     >
-      <div className="bg-base-100 rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2 gap-6">
+      <div className="grid gap-6 overflow-hidden shadow-xl bg-base-100 rounded-2xl md:grid-cols-2">
         {/* Image */}
         <div className="relative group">
           <img
             src={ticket.image}
             alt={ticket.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
           />
 
-          <div className="absolute top-4 left-4 bg-green-50 border border-green-300 text-green-700 px-4 py-1 rounded-full text-xs font-bold flex items-center gap-2 shadow">
+          <div className="absolute flex items-center gap-2 px-4 py-1 text-xs font-bold text-green-700 border border-green-300 rounded-full shadow top-4 left-4 bg-green-50">
             {transportIcon(ticket.transport_type)}
             <span className="capitalize">{ticket.transport_type}</span>
           </div>
         </div>
 
         {/* Info */}
-        <div className="p-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-6">
           {/* Title */}
           <div>
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+            <h2 className="text-xl font-bold text-gray-800 md:text-2xl">
               {ticket.title}
             </h2>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="mt-1 text-xs text-gray-500">
               Ticket Details & Journey Information
             </p>
           </div>
 
           {/* Route */}
-          <div className="bg-gray-50 p-4 rounded-xl">
-            <p className="text-xs font-bold text-gray-600 mb-1">ROUTE</p>
+          <div className="p-4 bg-gray-50 rounded-xl">
+            <p className="mb-1 text-xs font-bold text-gray-600">ROUTE</p>
             <div className="flex items-center gap-2 text-sm text-gray-800">
               <FaMapMarkerAlt className="text-red-500" />
               <span>{ticket.from}</span> → <span>{ticket.to}</span>
@@ -122,8 +122,8 @@ const TicketDetails = () => {
 
           {/* Info Grid */}
           <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="bg-green-50 p-4 rounded-xl">
-              <p className="text-xs font-bold text-gray-600 mb-1">
+            <div className="p-4 bg-green-50 rounded-xl">
+              <p className="mb-1 text-xs font-bold text-gray-600">
                 AVAILABLE SEATS
               </p>
               <div className="flex items-center gap-2 font-semibold">
@@ -132,16 +132,16 @@ const TicketDetails = () => {
               </div>
             </div>
 
-            <div className="bg-green-50 p-4 rounded-xl">
-              <p className="text-xs font-bold text-gray-600 mb-1">PRICE</p>
+            <div className="p-4 bg-green-50 rounded-xl">
+              <p className="mb-1 text-xs font-bold text-gray-600">PRICE</p>
               <div className="flex items-center gap-2 font-semibold text-green-700">
                 <FaMoneyBillWave />
                 {ticket.price} BDT
               </div>
             </div>
 
-            <div className="bg-orange-50 p-4 rounded-xl col-span-2">
-              <p className="text-xs font-bold text-gray-600 mb-1">
+            <div className="col-span-2 p-4 bg-orange-50 rounded-xl">
+              <p className="mb-1 text-xs font-bold text-gray-600">
                 DEPARTURE TIME
               </p>
               <div className="flex items-center gap-2 text-sm">
@@ -153,15 +153,15 @@ const TicketDetails = () => {
             </div>
           </div>
           {/* Countdown */}
-          <div className="bg-blue-50 border border-blue-200 text-blue-700 py-2 rounded-xl font-semibold text-sm flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 py-2 text-sm font-semibold text-blue-700 border border-blue-200 bg-blue-50 rounded-xl">
             <FaHourglassHalf className="text-blue-600" />
             <span>{countdown}</span>
           </div>
 
           {/* Description */}
-          <div className="bg-gray-50 p-4 rounded-xl">
-            <p className="text-xs font-bold text-gray-600 mb-1">DESCRIPTION</p>
-            <p className="text-gray-700 text-sm leading-relaxed">
+          <div className="p-4 bg-gray-50 rounded-xl">
+            <p className="mb-1 text-xs font-bold text-gray-600">DESCRIPTION</p>
+            <p className="text-sm leading-relaxed text-gray-700">
               {ticket.description}
             </p>
           </div>

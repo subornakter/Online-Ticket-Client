@@ -29,7 +29,7 @@ const BookingModal = ({ ticket, closeModal, setTicket }) => {
       };
 
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/bookings`,
+        `https://online-ticket-system-server.vercel.app/bookings`,
         bookingData,
         {
           headers: { Authorization: `Bearer ${token}` },

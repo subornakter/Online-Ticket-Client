@@ -21,7 +21,7 @@ const TransactionHistory = () => {
         const token = await user.getIdToken();
         try {
           const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/transactions?email=${user.email}`,
+            `https://online-ticket-system-server.vercel.app/transactions?email=${user.email}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -64,7 +64,7 @@ const TransactionHistory = () => {
       </div>
 
       {transactions.length === 0 ? (
-        <div className="p-12 text-center bg-base-100 border border-gray-300 border-dashed shadow-sm rounded-2xl">
+        <div className="p-12 text-center border border-gray-300 border-dashed shadow-sm bg-base-100 rounded-2xl">
           <FaReceipt className="mx-auto mb-4 text-5xl text-gray-200" />
           <p className="text-lg italic text-gray-500">
             No transactions found in your account.
@@ -73,7 +73,7 @@ const TransactionHistory = () => {
       ) : (
         <>
           {/* Desktop Table View */}
-          <div className="hidden overflow-hidden bg-base-100 border border-gray-100 shadow-xl md:block shadow-gray-100 rounded-2xl">
+          <div className="hidden overflow-hidden border border-gray-100 shadow-xl bg-base-100 md:block shadow-gray-100 rounded-2xl">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="text-gray-600 bg-green-100/80">
@@ -133,7 +133,7 @@ const TransactionHistory = () => {
             {transactions.map((t) => (
               <div
                 key={t.transactionId}
-                className="p-5 bg-base-100 border border-gray-100 shadow-sm rounded-2xl"
+                className="p-5 border border-gray-100 shadow-sm bg-base-100 rounded-2xl"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2 px-3 py-1 text-xs font-bold text-indigo-700 rounded-lg bg-indigo-50">

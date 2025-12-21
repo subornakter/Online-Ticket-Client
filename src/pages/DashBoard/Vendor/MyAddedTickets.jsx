@@ -24,7 +24,7 @@ const MyAddedTickets = () => {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/my-tickets?email=${user.email}`,
+          `https://online-ticket-system-server.vercel.app/my-tickets?email=${user.email}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setTickets(res.data);
@@ -54,7 +54,7 @@ const MyAddedTickets = () => {
         setActionLoading(id);
         try {
           const token = await user.getIdToken();
-          await axios.delete(`${import.meta.env.VITE_API_URL}/ticket/${id}`, {
+          await axios.delete(`https://online-ticket-system-server.vercel.app/ticket/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -92,7 +92,7 @@ const MyAddedTickets = () => {
     try {
       const token = await user.getIdToken();
       await axios.patch(
-        `${import.meta.env.VITE_API_URL}/ticket/${selectedTicket._id}`,
+        `https://online-ticket-system-server.vercel.app/ticket/${selectedTicket._id}`,
         updatedData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

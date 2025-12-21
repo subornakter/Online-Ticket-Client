@@ -15,7 +15,7 @@ const PaymentSuccess = () => {
 
       const updatePayment = async () => {
         try {
-          await axios.post(`${import.meta.env.VITE_API_URL}/payment-success`, {
+          await axios.post(`https://online-ticket-system-server.vercel.app/payment-success`, {
             sessionId,
           });
           toast.success("Payment confirmed and recorded!");

@@ -18,36 +18,59 @@ const MyBooking = () => {
   const { user } = useAuth();
 
   // Payment handler
+  // const handlePayment = async (booking) => {
+  //   try {
+  //     const token = await user.getIdToken();
+
+  //     const paymentInfo = {
+  //       _id: booking._id,
+  //       ticketId: booking.ticketId,
+  //       title: booking.title,
+  //       image: booking.image,
+  //       Price: booking.price,
+  //       quantity: booking.quantity,
+  //        totalPrice: booking.price * booking.quantity,
+  //       userEmail: user.email,
+  //       from: booking.from,
+  //       to: booking.to,
+  //       departureTime: new Date(booking.departureTime).toISOString(),
+  //     };
+
+  //     const { data } = await axios.post(
+  //       `https://online-ticket-system-server.vercel.app/create-checkout-session`,
+  //       paymentInfo,
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+
+  //     window.location.href = data.url;
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error("Payment failed!");
+  //   }
+  // };
   const handlePayment = async (booking) => {
-    try {
-      const token = await user.getIdToken();
+  try {
+    const token = await user.getIdToken();
 
-      const paymentInfo = {
-        _id: booking._id,
-        ticketId: booking.ticketId,
-        title: booking.title,
-        image: booking.image,
-        price: booking.price,
-        quantity: booking.quantity,
-        totalPrice: booking.price * booking.quantity,
-        userEmail: user.email,
-        from: booking.from,
-        to: booking.to,
-        departureTime: new Date(booking.departureTime).toISOString(),
-      };
+    const { data } = await axios.post(
+      "https://online-ticket-system-server.vercel.app/create-checkout-session",
+      {
+        _id: booking._id, // ✅ ONLY THIS
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
-        paymentInfo,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    window.location.href = data.url;
+  } catch (err) {
+    console.error(err);
+    toast.error(err?.response?.data?.message || "Payment failed");
+  }
+};
 
-      window.location.href = data.url;
-    } catch (err) {
-      console.log(err);
-      toast.error("Payment failed!");
-    }
-  };
 
   // Fetch bookings
   useEffect(() => {
@@ -58,7 +81,7 @@ const MyBooking = () => {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/my-bookings?email=${user.email}`,
+          `https://online-ticket-system-server.vercel.app/my-bookings?email=${user.email}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setBookings(res.data);
@@ -107,7 +130,7 @@ const MyBooking = () => {
                   scale: 1.03,
                   boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
                 }}
-                className="p-4 transition bg-base-100 border border-gray-200 rounded-lg shadow-md"
+                className="p-4 transition border border-gray-200 rounded-lg shadow-md bg-base-100"
               >
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-lg font-semibold">{booking.title}</h3>
@@ -147,7 +170,7 @@ const MyBooking = () => {
                   <p className="flex items-center gap-2">
                     <FaMoneyBillWave className="text-green-600" /> Total Price:{" "}
                     <span className="font-bold text-blue-600">
-                      ${booking.price * booking.quantity}
+                      ${booking.price}
                     </span>
                   </p>
                   <p className="flex items-center gap-2">

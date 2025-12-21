@@ -14,7 +14,7 @@ export default function Banner() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl font-bold text-green-600 md:text-5xl">
+          <h1 className="text-xl font-bold text-green-600 md:text-3xl">
             <Typewriter
               words={[
                 "Book Your Tickets Easily",
@@ -55,7 +55,7 @@ export default function Banner() {
         <img
           src="https://i.ibb.co.com/MktCxJ9t/ezgif-25f2aa05c35e816c.gif"
           alt="Travel Animation"
-          className="max-w-md md:w-1/2"
+          className="md:w-1/2"
         />
       </div>
     </section>

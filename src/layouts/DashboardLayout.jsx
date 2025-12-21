@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
-// import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
@@ -16,14 +15,12 @@ import {
   FaHome,
 } from "react-icons/fa";
 import { MdManageAccounts, MdCampaign } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DashboardLayout() {
   const [role, isLoading] = useRole();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // if (isLoading) return <LoadingSpinner />;
-
-  // ===== Role based dashboard title =====
   const dashboardTitle =
     role === "admin"
       ? "Admin Dashboard"
@@ -106,13 +103,9 @@ export default function DashboardLayout() {
             >
               <FaHome size={22} />
             </NavLink>
-
-            <h2 className="text-xl font-bold text-green-600">
-              {dashboardTitle}
-            </h2>
+            <h2 className="text-xl font-bold text-green-600">{dashboardTitle}</h2>
           </div>
-
-          <hr className="mb-4 text-gray-400" />
+          <hr className="mb-4 border-gray-300" />
           {SidebarContent}
         </aside>
 
@@ -120,44 +113,54 @@ export default function DashboardLayout() {
         <div className="md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 m-2 text-white bg-green-600 rounded-md"
+            className="p-2 m-2 text-white bg-green-600 rounded-md shadow-lg"
           >
             <FaBars size={24} />
           </button>
 
-          {sidebarOpen && (
-            <div className="fixed inset-0 z-50 flex">
-              <div
-                className="fixed inset-0 bg-black opacity-50"
-                onClick={() => setSidebarOpen(false)}
-              ></div>
-
-              <div className="relative z-50 w-64 p-5 shadow-lg bg-green-50">
-                <button
+          <AnimatePresence>
+            {sidebarOpen && (
+              <>
+                {/* Overlay */}
+                <motion.div
+                  className="fixed inset-0 z-40 bg-black bg-opacity-50"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.5 }}
+                  exit={{ opacity: 0 }}
                   onClick={() => setSidebarOpen(false)}
-                  className="absolute top-4 right-4"
+                />
+
+                {/* Sidebar Drawer */}
+                <motion.aside
+                  className="fixed top-0 left-0 z-50 flex flex-col w-64 h-full p-5 shadow-lg bg-green-50"
+                  initial={{ x: "-100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "-100%" }}
+                  transition={{ type: "tween", duration: 0.3 }}
                 >
-                  <FaTimes size={20} />
-                </button>
-
-                <div className="flex items-center gap-2 mb-6">
-                  <NavLink
-                    to="/dashboard"
+                  <button
                     onClick={() => setSidebarOpen(false)}
-                    className="text-green-600"
+                    className="absolute text-gray-700 top-4 right-4"
                   >
-                    <FaHome size={22} />
-                  </NavLink>
+                    <FaTimes size={20} />
+                  </button>
 
-                  <h2 className="text-lg font-bold text-green-600">
-                    {dashboardTitle}
-                  </h2>
-                </div>
+                  <div className="flex items-center gap-2 mb-6">
+                    <NavLink
+                      to="/dashboard"
+                      onClick={() => setSidebarOpen(false)}
+                      className="text-green-600"
+                    >
+                      <FaHome size={22} />
+                    </NavLink>
+                    <h2 className="text-lg font-bold text-green-600">{dashboardTitle}</h2>
+                  </div>
 
-                {SidebarContent}
-              </div>
-            </div>
-          )}
+                  {SidebarContent}
+                </motion.aside>
+              </>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* ===== Main Content ===== */}

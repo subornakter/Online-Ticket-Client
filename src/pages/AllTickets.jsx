@@ -37,12 +37,13 @@ const AllTickets = () => {
       try {
         const token = await user.getIdToken();
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/tickets`,
+          `https://online-ticket-system-server.vercel.app/tickets`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         setTickets(res.data);
+        console.log("Fetched tickets:", res.data);
       } catch (err) {
         console.log(err);
       } finally {
@@ -66,7 +67,7 @@ const AllTickets = () => {
       }).toString();
 
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/tickets/search?${queryParams}`,
+        `https://online-ticket-system-server.vercel.app/tickets/search?${queryParams}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

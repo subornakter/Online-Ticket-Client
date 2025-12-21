@@ -22,7 +22,7 @@ const RevenueOverview = () => {
         const token = await user.getIdToken();
         try {
           const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/vendor/revenue-overview`,
+            `https://online-ticket-system-server.vercel.app/vendor/revenue-overview`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
 

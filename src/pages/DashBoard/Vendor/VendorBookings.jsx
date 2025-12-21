@@ -15,7 +15,7 @@ export default function VendorBookings() {
     try {
       const token = await user.getIdToken();
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/vendor/bookings?email=${user.email}`,
+        `https://online-ticket-system-server.vercel.app/vendor/bookings?email=${user.email}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (!res.ok) throw new Error("Failed to fetch bookings");
@@ -38,7 +38,7 @@ export default function VendorBookings() {
     try {
       const token = await user.getIdToken();
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/vendor/accept/${id}`,
+        `https://online-ticket-system-server.vercel.app/vendor/accept/${id}`,
         { method: "PATCH", headers: { Authorization: `Bearer ${token}` } }
       );
       if (!res.ok) throw new Error("Failed to accept booking");
@@ -57,7 +57,7 @@ export default function VendorBookings() {
     try {
       const token = await user.getIdToken();
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/vendor/reject/${id}`,
+        `https://online-ticket-system-server.vercel.app/vendor/reject/${id}`,
         { method: "PATCH", headers: { Authorization: `Bearer ${token}` } }
       );
       if (!res.ok) throw new Error("Failed to reject booking");

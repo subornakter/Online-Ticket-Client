@@ -4,7 +4,7 @@ import axios from 'axios'
 import useAuth from './useAuth'
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "https://online-ticket-system-server.vercel.app",
   withCredentials: true,
 })
 
@@ -29,7 +29,7 @@ const useAxiosSecure = () => {
           if (err?.response?.status === 401 || err?.response?.status === 403) {
             logOut()
               .then(() => {
-                console.log('Logged out successfully.')
+                // console.log('Logged out successfully.')
               })
               .catch(console.error)
             navigate('/login')
