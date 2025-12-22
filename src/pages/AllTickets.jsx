@@ -33,14 +33,13 @@ const AllTickets = () => {
   // Load ALL tickets
   useEffect(() => {
     const fetchTickets = async () => {
-      if (!user) return;
+    
+      
       try {
-        const token = await user.getIdToken();
+     
         const res = await axios.get(
           `https://online-ticket-system-server.vercel.app/tickets`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+         
         );
         setTickets(res.data);
         console.log("Fetched tickets:", res.data);
@@ -51,7 +50,7 @@ const AllTickets = () => {
       }
     };
     fetchTickets();
-  }, [user]);
+  }, []);
 
   // SEARCH
   const handleSearch = async () => {
