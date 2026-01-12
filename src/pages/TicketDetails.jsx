@@ -120,7 +120,7 @@ const TicketDetails = () => {
             </div>
           </div>
 
-          {/* Info Grid */}
+       
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="p-4 bg-green-50 rounded-xl">
               <p className="mb-1 text-xs font-bold text-gray-600">
